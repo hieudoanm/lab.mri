@@ -1,0 +1,1487 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "MRI Lab API",
+    "description": "REST API for MRI Lab - project-scoped neuroimaging data management, pipelines, and reproducible experiment runs.",
+    "version": "0.1.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth"
+    },
+    {
+      "name": "projects"
+    },
+    {
+      "name": "datasets"
+    },
+    {
+      "name": "pipelines"
+    },
+    {
+      "name": "runs"
+    },
+    {
+      "name": "annotations"
+    },
+    {
+      "name": "usage"
+    },
+    {
+      "name": "health"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "cookieAuth": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "mri-lab_session"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "details",
+          "request_id"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "request_id": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "Page": {
+        "type": "object",
+        "required": [
+          "items",
+          "next_cursor",
+          "has_more"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "next_cursor": {
+            "type": "string",
+            "nullable": true
+          },
+          "has_more": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Project": {
+        "type": "object",
+        "required": [
+          "id",
+          "owner_id",
+          "name",
+          "visibility",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "owner_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "private",
+              "public"
+            ]
+          },
+          "archived_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ProjectMember": {
+        "type": "object",
+        "required": [
+          "project_id",
+          "user_id",
+          "role",
+          "created_at"
+        ],
+        "properties": {
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "editor",
+              "viewer"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Dataset": {
+        "type": "object",
+        "required": [
+          "id",
+          "project_id",
+          "name",
+          "source_type",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": [
+              "upload",
+              "import",
+              "sample"
+            ]
+          },
+          "archived_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DatasetVersion": {
+        "type": "object",
+        "required": [
+          "id",
+          "dataset_id",
+          "version",
+          "manifest",
+          "status",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dataset_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "string"
+          },
+          "manifest": {
+            "type": "object"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "created",
+              "validating",
+              "ready",
+              "failed"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FileAsset": {
+        "type": "object",
+        "required": [
+          "id",
+          "dataset_version_id",
+          "object_key",
+          "checksum",
+          "size_bytes",
+          "media_type",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dataset_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "object_key": {
+            "type": "string"
+          },
+          "checksum": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UploadSession": {
+        "type": "object",
+        "required": [
+          "id",
+          "dataset_id",
+          "project_id",
+          "status",
+          "expires_at",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dataset_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "expired",
+              "aborted"
+            ]
+          },
+          "expected_size_bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "nullable": true
+          },
+          "checksum_sha256": {
+            "type": "string",
+            "nullable": true
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Pipeline": {
+        "type": "object",
+        "required": [
+          "id",
+          "project_id",
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PipelineVersion": {
+        "type": "object",
+        "required": [
+          "id",
+          "pipeline_id",
+          "version",
+          "definition",
+          "image_digest",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pipeline_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "object"
+          },
+          "image_digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ExperimentRun": {
+        "type": "object",
+        "required": [
+          "id",
+          "pipeline_version_id",
+          "dataset_version_id",
+          "status",
+          "parameters",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "pipeline_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dataset_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ]
+          },
+          "parameters": {
+            "type": "object"
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finished_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Artifact": {
+        "type": "object",
+        "required": [
+          "id",
+          "run_id",
+          "object_key",
+          "checksum",
+          "media_type",
+          "metadata",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "object_key": {
+            "type": "string"
+          },
+          "checksum": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Annotation": {
+        "type": "object",
+        "required": [
+          "id",
+          "project_id",
+          "dataset_version_id",
+          "coordinate_space",
+          "coordinates",
+          "body",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "project_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dataset_version_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "coordinate_space": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "object"
+          },
+          "body": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UsageRecord": {
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "resource_type",
+          "quantity",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "run_id": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "resource_type": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "HealthLive": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok"
+            ]
+          }
+        }
+      },
+      "HealthReady": {
+        "type": "object",
+        "required": [
+          "status",
+          "dependencies"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "degraded",
+              "not_ready"
+            ]
+          },
+          "dependencies": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/health/live": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "503": {
+            "description": "Not ready"
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current user"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Login success"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "projects"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "security": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "security": [],
+        "responses": {
+          "204": {
+            "description": "Logged out"
+          }
+        }
+      }
+    },
+    "/auth/password-reset": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Reset requested"
+          }
+        }
+      }
+    },
+    "/projects/{id}": {
+      "get": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/projects/{id}/members": {
+      "get": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List members"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Member added"
+          }
+        }
+      }
+    },
+    "/projects/{id}/members/{userId}": {
+      "patch": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          },
+          {
+            "$ref": "#/components/parameters/userId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Removed"
+          }
+        }
+      }
+    },
+    "/projects/{id}/shares": {
+      "post": {
+        "tags": [
+          "projects"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Share created"
+          }
+        }
+      }
+    },
+    "/projects/{id}/datasets": {
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/datasets/{id}": {
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/datasetId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/datasetId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/datasetId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/versions": {
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/datasetId"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List versions"
+          }
+        }
+      }
+    },
+    "/datasets/{id}/uploads": {
+      "post": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/datasetId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Upload session created"
+          }
+        }
+      }
+    },
+    "/uploads/{id}": {
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/uploadId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get upload session"
+          }
+        }
+      }
+    },
+    "/uploads/{id}/complete": {
+      "post": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/uploadId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Completed"
+          }
+        }
+      }
+    },
+    "/file-assets/{id}/download-url": {
+      "get": {
+        "tags": [
+          "datasets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/fileAssetId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signed download URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedUrlResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pipelines": {
+      "get": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "pipelines"
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/pipelines/{id}": {
+      "get": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pipelineId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pipelineId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pipelineId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/pipelines/{id}/versions": {
+      "get": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pipelineId"
+          },
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List versions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pipelineId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/pipeline-versions/{id}": {
+      "get": {
+        "tags": [
+          "pipelines"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/pipelineVersionId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get version"
+          }
+        }
+      }
+    },
+    "/runs": {
+      "post": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        },
+        "headers": {
+          "Idempotency-Key": {
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List"
+          }
+        }
+      }
+    },
+    "/runs/{id}": {
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/runId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get run"
+          }
+        }
+      }
+    },
+    "/runs/{id}/cancel": {
+      "post": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/runId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cancelled"
+          }
+        }
+      }
+    },
+    "/runs/{id}/rerun": {
+      "post": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/runId"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Rerun accepted"
+          }
+        }
+      }
+    },
+    "/runs/{id}/logs": {
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/runId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logs"
+          }
+        }
+      }
+    },
+    "/runs/{id}/artifacts": {
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/runId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List artifacts"
+          }
+        }
+      }
+    },
+    "/artifacts/{id}/download-url": {
+      "get": {
+        "tags": [
+          "runs"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/artifactId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signed download URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignedUrlResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{id}/annotations": {
+      "get": {
+        "tags": [
+          "annotations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "annotations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/projectId"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/annotations/{id}": {
+      "get": {
+        "tags": [
+          "annotations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/annotationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "annotations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/annotationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "annotations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/annotationId"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/usage": {
+      "get": {
+        "tags": [
+          "usage"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/cursor"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage records"
+          }
+        }
+      }
+    },
+    "/quotas": {
+      "get": {
+        "tags": [
+          "usage"
+        ],
+        "responses": {
+          "200": {
+            "description": "Quotas"
+          }
+        }
+      }
+    }
+  }
+}
