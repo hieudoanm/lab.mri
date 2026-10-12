@@ -1,0 +1,21 @@
+/* TEAM */
+Team: MRI Lab Contributors
+Site: https://mri-lab.example.com
+GitHub: https://github.com/hieudoanm/mri-lab
+
+/* TECHNOLOGY */
+Stack: Next.js 16, React 19, TypeScript 6, Tailwind CSS 4
+API: FastAPI, Python, PostgreSQL, Redis
+Imaging: NIfTI, NumPy, image-processing pipelines
+Auth: OIDC, JWT, HttpOnly sessions
+Testing: Vitest, Playwright, pytest
+CI/CD: GitHub Actions, Docker
+
+/* STANDARDS */
+HTML5, CSS3, ES2024
+Web App Manifest, Open Graph, Twitter Cards
+Accessibility: WCAG 2.1 AA
+
+/* CONTACT */
+Security: security@mri-lab.example.com
+Email: hello@mri-lab.example.com

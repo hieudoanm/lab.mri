@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "positions": {
+    "users": { "x": 0, "y": 0 },
+    "projects": { "x": 320, "y": 0 },
+    "project_members": { "x": 640, "y": 0 },
+    "datasets": { "x": 320, "y": 320 },
+    "dataset_versions": { "x": 640, "y": 320 },
+    "file_assets": { "x": 960, "y": 320 },
+    "upload_sessions": { "x": 960, "y": 0 },
+    "pipelines": { "x": 0, "y": 320 },
+    "pipeline_versions": { "x": 0, "y": 640 },
+    "experiment_runs": { "x": 320, "y": 640 },
+    "artifacts": { "x": 640, "y": 640 },
+    "annotations": { "x": 960, "y": 640 },
+    "usage_records": { "x": 0, "y": 960 },
+    "audit_events": { "x": 320, "y": 960 },
+    "outbox_events": { "x": 640, "y": 960 },
+    "idempotency_keys": { "x": 960, "y": 960 }
+  }
+}

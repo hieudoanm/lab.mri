@@ -1,0 +1,175 @@
+erDiagram
+
+    users {
+        PK UUID id
+        TEXT email
+        TEXT display_name
+        TIMESTAMPTZ created_at
+    }
+
+    projects {
+        PK UUID id
+        UUID owner_id
+        TEXT name
+        TEXT description
+        PROJECT_VISIBILITY visibility
+        TIMESTAMPTZ created_at
+        TIMESTAMPTZ updated_at
+        TIMESTAMPTZ archived_at
+        CREATED_AT) (owner_id,
+        CREATED_AT) (visibility,
+    }
+
+    project_members {
+        UUID project_id
+        UUID user_id
+        PROJECT_ROLE role
+        TIMESTAMPTZ created_at
+        UK USER_ID) (project_id,
+    }
+
+    datasets {
+        PK UUID id
+        UUID project_id
+        TEXT name
+        DATASET_SOURCE_TYPE source_type
+        TIMESTAMPTZ created_at
+        TIMESTAMPTZ updated_at
+        TIMESTAMPTZ archived_at
+        CREATED_AT) (project_id,
+        UK ID) (project_id,
+    }
+
+    dataset_versions {
+        PK UUID id
+        UUID dataset_id
+        TEXT version
+        JSONB manifest
+        TEXT status
+        TIMESTAMPTZ created_at
+        UK VERSION) (dataset_id,
+        CREATED_AT) (dataset_id,
+        UK ID) (dataset_id,
+    }
+
+    file_assets {
+        PK UUID id
+        UUID dataset_version_id
+        TEXT object_key
+        TEXT checksum
+        BIGINT size_bytes
+        TEXT media_type
+        TIMESTAMPTZ created_at
+    }
+
+    upload_sessions {
+        PK UUID id
+        UUID dataset_id
+        UUID project_id
+        UPLOAD_SESSION_STATUS status
+        BIGINT expected_size_bytes
+        TEXT checksum_sha256
+        TIMESTAMPTZ expires_at
+        TIMESTAMPTZ created_at
+        CREATED_AT) (dataset_id,
+        EXPIRES_AT) (status,
+    }
+
+    pipelines {
+        PK UUID id
+        UUID project_id
+        TEXT name
+        TIMESTAMPTZ created_at
+        TIMESTAMPTZ updated_at
+        CREATED_AT) (project_id,
+        UK ID) (project_id,
+    }
+
+    pipeline_versions {
+        PK UUID id
+        UUID pipeline_id
+        TEXT version
+        JSONB definition
+        TEXT image_digest
+        TIMESTAMPTZ created_at
+        UK VERSION) (pipeline_id,
+    }
+
+    experiment_runs {
+        PK UUID id
+        UUID pipeline_version_id
+        UUID dataset_version_id
+        RUN_STATUS status
+        JSONB parameters
+        TEXT error
+        TIMESTAMPTZ started_at
+        TIMESTAMPTZ finished_at
+        TIMESTAMPTZ created_at
+        CREATED_AT) (status,
+        CREATED_AT) (dataset_version_id,
+        CREATED_AT) (pipeline_version_id,
+    }
+
+    artifacts {
+        PK UUID id
+        UUID run_id
+        TEXT object_key
+        TEXT checksum
+        TEXT media_type
+        JSONB metadata
+        TIMESTAMPTZ created_at
+    }
+
+    annotations {
+        PK UUID id
+        UUID project_id
+        UUID dataset_version_id
+        TEXT coordinate_space
+        JSONB coordinates
+        TEXT body
+        TIMESTAMPTZ created_at
+        CREATED_AT) (dataset_version_id,
+        CREATED_AT) (project_id,
+    }
+
+    usage_records {
+        PK UUID id
+        UUID user_id
+        UUID run_id
+        TEXT resource_type
+        BIGINT quantity
+        TIMESTAMPTZ created_at
+        CREATED_AT) (user_id,
+    }
+
+    audit_events {
+        PK UUID id
+        UUID actor_id
+        TEXT action
+        TEXT resource_type
+        UUID resource_id
+        TIMESTAMPTZ created_at
+        RESOURCE_ID, (resource_type,
+        CREATED_AT) (actor_id,
+    }
+
+    outbox_events {
+        PK UUID id
+        TEXT event_type
+        JSONB payload
+        OUTBOX_STATUS status
+        TIMESTAMPTZ created_at
+        TIMESTAMPTZ dispatched_at
+        CREATED_AT) (status,
+        CREATED_AT) (event_type,
+    }
+
+    idempotency_keys {
+        PK TEXT key
+        UUID user_id
+        TEXT request_hash
+        JSONB response
+        TIMESTAMPTZ created_at
+        UK KEY) (user_id,
+    }
+
