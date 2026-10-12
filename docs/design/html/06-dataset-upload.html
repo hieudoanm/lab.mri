@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MRI Lab — Dataset upload</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','Segoe UI','sans-serif'], mono: ['ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
+  colors: {
+    background:'#0B0F14', surface:'#121821', surfaceMuted:'#1A2230', surfaceRaised:'#212B3A',
+    border:'#263244', borderStrong:'#35455C', textPrimary:'#E6EDF5', textSecondary:'#9BA9BC', textMuted:'#6B7A90',
+    accent:'#4C8DFF', accentHover:'#6BA1FF', accentMuted:'#1C3355',
+    success:'#3FB950', successMuted:'#16301F', warning:'#D9A441', warningMuted:'#33290F',
+    danger:'#F0554D', dangerMuted:'#3A1C1A', info:'#58A6FF', infoMuted:'#16283F', neutralState:'#5B6578'
+  }
+} } };
+</script>
+<style>
+  :root{color-scheme:dark}
+  html,body{background:#0B0F14}
+  body{font-feature-settings:'cv02','cv03','cv04','cv11'}
+  .focus-ring:focus-visible{outline:2px solid #7FB2FF;outline-offset:2px;border-radius:6px}
+  .card{background:#121821;border:1px solid #263244}
+  .table :where(th,td){border-color:#263244}
+  .table th{color:#9BA9BC;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  .menu li>a{color:#9BA9BC}
+  .menu li>a:hover{background:#1A2230;color:#E6EDF5}
+</style>
+</head>
+<body class="min-h-screen bg-background text-textPrimary antialiased font-sans text-[14px] leading-[22px]">
+  <div class="flex min-h-screen">
+    <aside class="hidden w-60 shrink-0 flex-col border-r border-border bg-surface md:flex">
+      <div class="flex h-14 items-center gap-2.5 border-b border-border px-4">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-background">M</div>
+        <span class="text-[15px] font-semibold tracking-tight">MRI&nbsp;Lab</span>
+      </div>
+      <nav class="flex-1 space-y-0.5 overflow-y-auto p-2 text-sm">
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Home</a>
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Projects</a>
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 bg-accentMuted font-medium text-textPrimary"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Datasets</a>
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M12 4v16M4 12h16"/></svg>Viewer</a>
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg>Pipelines</a>
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="m14.5 9.5-1.8 4.7-4.7 1.8 1.8-4.7Z"/></svg>Explore</a>
+        <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3H9.8L9.4 5.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4.4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z"/></svg>Settings</a>
+      </nav>
+      <div class="border-t border-border px-4 py-3 text-[11px] text-textMuted">v0.1.0 · prototype</div>
+    </aside>
+    <div class="flex min-w-0 flex-1 flex-col">
+      <header class="sticky top-0 z-20 flex h-14 items-center justify-between gap-4 border-b border-border bg-surface px-4 md:px-6">
+        <div class="flex min-w-0 items-center gap-3">
+          <nav class="hidden items-center gap-1.5 text-[13px] text-textMuted lg:flex">
+            <a href="04-projects.html" class="hover:text-textPrimary">Projects</a>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-3.5 w-3.5"><path d="m9 6 6 6-6 6"/></svg>
+            <a href="05-project-detail.html" class="hover:text-textPrimary">IXI Brain Atlas</a>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-3.5 w-3.5"><path d="m9 6 6 6-6 6"/></svg>
+            <span class="font-medium text-textPrimary">Upload</span>
+          </nav>
+          <button class="focus-ring flex items-center gap-2 rounded-md border border-border bg-surfaceMuted px-3 py-1.5 text-[13px]"><span class="text-textMuted">Project</span><span class="font-medium">IXI Brain Atlas</span><span class="rounded bg-accentMuted px-1.5 text-[11px] text-accent">private</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-3.5 w-3.5"><path d="m6 9 6 6 6-6"/></svg></button>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="hidden items-center gap-2 rounded-md border border-border bg-surfaceMuted px-3 py-1.5 text-[13px] text-textMuted lg:flex">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" class="h-4 w-4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span>Search datasets, runs…</span>
+            <kbd class="ml-8 rounded border border-border px-1.5 text-[11px]">⌘K</kbd>
+          </div>
+          <button class="focus-ring relative flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surfaceMuted text-textSecondary hover:text-textPrimary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+            <span class="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-accent"></span>
+          </button>
+          <div class="flex items-center gap-2 rounded-md border border-border bg-surfaceMuted py-1 pl-1 pr-2">
+            <div class="flex h-6 w-6 items-center justify-center rounded-md bg-accentMuted text-[11px] font-semibold text-accent">HD</div>
+            <span class="hidden text-[13px] text-textSecondary sm:inline">Hieu Doan</span>
+          </div>
+        </div>
+      </header>
+      <main class="flex-1 px-4 py-6 md:px-6">
+
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="mb-1 text-[12px] font-semibold uppercase tracking-wider text-textMuted">Datasets</div>
+            <h1 class="text-[28px] font-semibold leading-9 tracking-tight">Upload dataset</h1>
+            <p class="mt-1 max-w-2xl text-[14px] text-textSecondary">Upload a NIfTI volume (<span class="font-mono">.nii</span> or <span class="font-mono">.nii.gz</span>). The server validates the header, spatial metadata, and checksum before the dataset becomes <span class="text-textPrimary">ready</span>.</p>
+          </div>
+          <button class="focus-ring inline-flex h-9 items-center gap-2 rounded-md px-3 text-[13px] font-medium text-textSecondary hover:text-textPrimary">Cancel</button>
+        </div>
+
+        <div class="mb-6 flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-successMuted text-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-3.5 w-3.5"><path d="m5 12 4 4 10-10"/></svg></span>
+            <span class="text-[13px] font-medium text-textPrimary">1 · Select files</span>
+          </div>
+          <span class="h-px w-10 bg-borderStrong"></span>
+          <div class="flex items-center gap-2">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-successMuted text-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-3.5 w-3.5"><path d="m5 12 4 4 10-10"/></svg></span>
+            <span class="text-[13px] font-medium text-textPrimary">2 · Validate</span>
+          </div>
+          <span class="h-px w-10 bg-borderStrong"></span>
+          <div class="flex items-center gap-2">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-accent text-[12px] font-semibold text-accent">3</span>
+            <span class="text-[13px] font-medium text-accent">3 · Confirm &amp; upload</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+          <div class="space-y-6 xl:col-span-2">
+
+            <div class="card rounded-lg">
+              <div class="flex items-center justify-between border-b border-border px-4 py-3">
+                <h2 class="text-[15px] font-semibold">1 · Select files</h2>
+                <span class="text-[12px] text-textMuted">Limit 2 GB per file</span>
+              </div>
+              <div class="p-4">
+                <div class="focus-ring flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-borderStrong bg-surfaceMuted/40 px-6 py-10 text-center">
+                  <div class="flex h-11 w-11 items-center justify-center rounded-full bg-accentMuted text-accent">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/></svg>
+                  </div>
+                  <p class="mt-3 text-[14px] font-medium">Drag and drop NIfTI volumes here</p>
+                  <p class="mt-1 text-[13px] text-textSecondary">Supported: <span class="font-mono">.nii</span>, <span class="font-mono">.nii.gz</span></p>
+                  <button class="focus-ring mt-4 inline-flex h-9 items-center gap-2 rounded-md border border-border bg-surfaceRaised px-3.5 text-[13px] font-medium text-textPrimary hover:bg-surfaceMuted">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg>
+                    Choose files
+                  </button>
+                </div>
+
+                <div class="mt-4 space-y-2">
+                  <div class="flex items-center justify-between gap-4 rounded-md border border-border bg-surfaceMuted px-3 py-2.5">
+                    <div class="flex min-w-0 items-center gap-3">
+                      <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-successMuted text-success">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-4 w-4"><path d="m5 12 4 4 10-10"/></svg>
+                      </div>
+                      <div class="min-w-0">
+                        <div class="truncate font-mono text-[13px] text-textPrimary">sub-IXI0421_T1w.nii.gz</div>
+                        <div class="text-[12px] text-textMuted">412.6 MB · uploaded</div>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <span class="text-[12px] font-medium text-success">100%</span>
+                      <button class="focus-ring rounded px-1.5 py-1 text-textMuted hover:text-textPrimary" aria-label="Remove file">✕</button>
+                    </div>
+                  </div>
+
+                  <div class="rounded-md border border-border bg-surfaceMuted px-3 py-2.5">
+                    <div class="flex items-center justify-between gap-4">
+                      <div class="flex min-w-0 items-center gap-3">
+                        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-accentMuted text-accent">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/></svg>
+                        </div>
+                        <div class="min-w-0">
+                          <div class="truncate font-mono text-[13px] text-textPrimary">sub-IXI0421_T2w.nii.gz</div>
+                          <div class="text-[12px] text-textMuted">398.1 MB · resumable</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <span class="text-[12px] font-medium text-accent">68%</span>
+                        <button class="focus-ring rounded px-1.5 py-1 text-textMuted hover:text-textPrimary" aria-label="Remove file">✕</button>
+                      </div>
+                    </div>
+                    <div class="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-surfaceRaised">
+                      <div class="h-full rounded-full bg-accent" style="width:68%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card rounded-lg">
+              <div class="flex items-center justify-between border-b border-border px-4 py-3">
+                <h2 class="text-[15px] font-semibold">2 · NIfTI validation report</h2>
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-successMuted px-2.5 py-0.5 text-[12px] font-medium text-success"><span class="h-1.5 w-1.5 rounded-full bg-current"></span>validated</span>
+              </div>
+              <div class="p-4">
+                <div class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Format</div>
+                    <div class="mt-1 font-mono text-[13px]">.nii.gz · gzip + NIfTI-1</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Integrity · SHA-256</div>
+                    <div class="mt-1 flex items-center gap-2">
+                      <span class="font-mono text-[12px] text-textSecondary">sha256:9f3c1b7a41d0e8c25b6a…</span>
+                      <button class="focus-ring rounded px-1.5 py-0.5 text-textMuted hover:text-textPrimary" aria-label="Copy checksum">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Header</div>
+                    <div class="mt-1 font-mono text-[13px]">nifti1 · little-endian · parseable</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Dimensions</div>
+                    <div class="mt-1 font-mono text-[13px]">256 × 256 × 150 voxels</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Voxel spacing</div>
+                    <div class="mt-1 font-mono text-[13px]">1.0 × 1.0 × 1.0 mm</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Orientation</div>
+                    <div class="mt-1 font-mono text-[13px]">RAS+ · L→R, P→A, I→S</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Data type</div>
+                    <div class="mt-1 font-mono text-[13px]">float32</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Volumes (4D)</div>
+                    <div class="mt-1 font-mono text-[13px]">1 · single volume</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Calibration</div>
+                    <div class="mt-1 font-mono text-[13px]">scl_slope 1.0 · scl_inter 0.0</div>
+                  </div>
+                  <div>
+                    <div class="text-[12px] font-medium uppercase tracking-wide text-textMuted">Resource limits</div>
+                    <div class="mt-1 font-mono text-[13px]">decoded 39.3 MB · within bounds</div>
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <div class="mb-1.5 text-[12px] font-medium uppercase tracking-wide text-textMuted">Affine (voxel → mm)</div>
+                  <pre class="overflow-x-auto rounded-md border border-border bg-background px-4 py-3 font-mono text-[12px] leading-5 text-textSecondary">[-1.0000   0.0000   0.0000   128.0000]
+[ 0.0000   1.0000   0.0000  -128.0000]
+[ 0.0000   0.0000   1.0000   -75.0000]
+[ 0.0000   0.0000   0.0000     1.0000]</pre>
+                  <p class="mt-1.5 text-[12px] text-textMuted">Finite and invertible · determinant 1.0 · qform/sform agree</p>
+                </div>
+
+                <div class="mt-4 flex items-start gap-3 rounded-md border border-warning/40 bg-warningMuted px-3 py-2.5">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-4 w-4 shrink-0 text-warning"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 4.3 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z"/></svg>
+                  <div>
+                    <p class="text-[13px] font-medium text-warning">1 warning</p>
+                    <p class="mt-0.5 text-[13px] text-textSecondary">Slice timing metadata is absent (<span class="font-mono">slice_code = 0</span>). Acceptable for structural T1w data; required only for fMRI time series.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card rounded-lg">
+              <div class="border-b border-border px-4 py-3">
+                <h2 class="text-[15px] font-semibold">3 · Confirm metadata</h2>
+              </div>
+              <div class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2">
+                <div class="sm:col-span-2">
+                  <label class="mb-1.5 block text-[13px] font-medium text-textSecondary">Dataset name <span class="text-danger">*</span></label>
+                  <input class="focus-ring h-9 w-full rounded-md border border-border bg-surfaceMuted px-3 text-[13px] text-textPrimary placeholder:text-textMuted" value="IXI-T1-0421" />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-[13px] font-medium text-textSecondary">Source / provenance</label>
+                  <input class="focus-ring h-9 w-full rounded-md border border-border bg-surfaceMuted px-3 text-[13px] text-textPrimary placeholder:text-textMuted" value="IXI Dataset — Guys Hospital" />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-[13px] font-medium text-textSecondary">Subject identifier (anonymised)</label>
+                  <input class="focus-ring h-9 w-full rounded-md border border-border bg-surfaceMuted px-3 font-mono text-[13px] text-textPrimary placeholder:text-textMuted" value="sub-IXI0421" />
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-[13px] font-medium text-textSecondary">License</label>
+                  <select class="focus-ring h-9 w-full rounded-md border border-border bg-surfaceMuted px-3 text-[13px] text-textPrimary">
+                    <option>CC BY-NC-SA 3.0 (IXI)</option>
+                    <option>CC0 1.0</option>
+                    <option>ODC-BY 1.0</option>
+                    <option>Restricted — internal use</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-1.5 block text-[13px] font-medium text-textSecondary">Modality</label>
+                  <select class="focus-ring h-9 w-full rounded-md border border-border bg-surfaceMuted px-3 text-[13px] text-textPrimary">
+                    <option>T1w</option>
+                    <option>T2w</option>
+                    <option>PDw</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="mb-1.5 block text-[13px] font-medium text-textSecondary">Source notes</label>
+                  <textarea rows="2" class="focus-ring w-full rounded-md border border-border bg-surfaceMuted px-3 py-2 text-[13px] text-textPrimary placeholder:text-textMuted" placeholder="Attribution, citation, or acquisition notes…">Structural T1w, 1 mm isotropic. De-identified before upload.</textarea>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-3 border-t border-border px-4 py-3">
+                <div class="text-[13px] text-textSecondary">Provides: 2 files · 810.7 MB total</div>
+                <div class="flex items-center gap-2">
+                  <button class="focus-ring inline-flex h-9 items-center gap-2 rounded-md border border-border bg-surfaceMuted px-3.5 text-[13px] font-medium text-textPrimary hover:bg-surfaceRaised">Back</button>
+                  <button class="focus-ring inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3.5 text-[13px] font-semibold text-background hover:bg-accentHover">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/></svg>
+                    Start upload
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div class="card rounded-lg p-4">
+              <h2 class="text-[15px] font-semibold">Upload progress</h2>
+              <div class="mt-3 flex items-center justify-between text-[13px]">
+                <span class="text-textSecondary">Transfer</span>
+                <span class="font-mono text-textPrimary">68%</span>
+              </div>
+              <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-surfaceMuted">
+                <div class="h-full rounded-full bg-accent" style="width:68%"></div>
+              </div>
+              <p class="mt-2 text-[12px] text-textSecondary">Resumable · <span class="font-mono">551.3 MB</span> of <span class="font-mono">810.7 MB</span></p>
+              <div class="mt-4 flex items-center gap-2">
+                <button class="focus-ring inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surfaceMuted px-3 text-[13px] font-medium text-textPrimary hover:bg-surfaceRaised">Pause</button>
+                <button class="focus-ring inline-flex h-8 items-center gap-1.5 rounded-md px-3 text-[13px] font-medium text-danger hover:text-textPrimary">Cancel</button>
+              </div>
+            </div>
+
+            <div class="card rounded-lg p-4">
+              <h2 class="text-[15px] font-semibold">Stage indicator</h2>
+              <ol class="mt-3 space-y-3">
+                <li class="flex items-center gap-3">
+                  <span class="flex h-5 w-5 items-center justify-center rounded-full bg-successMuted text-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-3 w-3"><path d="m5 12 4 4 10-10"/></svg></span>
+                  <span class="text-[13px] text-textPrimary">Upload</span>
+                  <span class="ml-auto font-mono text-[12px] text-textMuted">00:41</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="flex h-5 w-5 items-center justify-center rounded-full bg-successMuted text-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-3 w-3"><path d="m5 12 4 4 10-10"/></svg></span>
+                  <span class="text-[13px] text-textPrimary">Validate</span>
+                  <span class="ml-auto font-mono text-[12px] text-textMuted">00:06</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="flex h-5 w-5 items-center justify-center rounded-full border-2 border-accent"><span class="h-1.5 w-1.5 rounded-full bg-accent"></span></span>
+                  <span class="text-[13px] font-medium text-accent">Ready</span>
+                  <span class="ml-auto text-[12px] text-textMuted">pending</span>
+                </li>
+              </ol>
+            </div>
+
+            <div class="flex items-start gap-3 rounded-lg border border-success/40 bg-successMuted px-4 py-3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 h-5 w-5 shrink-0 text-success"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>
+              <div>
+                <p class="text-[13px] font-medium text-success">Completed status</p>
+                <p class="mt-0.5 text-[13px] text-textSecondary">When the server confirms validation, the dataset becomes <span class="font-medium text-textPrimary">ready</span> and <span class="font-medium text-textPrimary">Open in viewer</span> becomes available. No success is shown before server confirmation.</p>
+              </div>
+            </div>
+
+            <div class="card rounded-lg p-4">
+              <h2 class="text-[15px] font-semibold">Duplicate detection</h2>
+              <p class="mt-2 text-[13px] text-textSecondary">Checksum matches an existing asset in this project:</p>
+              <p class="mt-1 font-mono text-[12px] text-textMuted">sha256:9f3c1b7a41d0e8c2…</p>
+              <p class="mt-2 text-[13px] text-warning">A dataset with this content already exists (IXI-T1-0421 v1). Uploading again creates a new immutable version.</p>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>
