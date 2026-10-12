@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MRI Lab — Landing</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','Segoe UI','sans-serif'], mono: ['ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
+  colors: {
+    background:'#0B0F14', surface:'#121821', surfaceMuted:'#1A2230', surfaceRaised:'#212B3A',
+    border:'#263244', borderStrong:'#35455C', textPrimary:'#E6EDF5', textSecondary:'#9BA9BC', textMuted:'#6B7A90',
+    accent:'#4C8DFF', accentHover:'#6BA1FF', accentMuted:'#1C3355',
+    success:'#3FB950', successMuted:'#16301F', warning:'#D9A441', warningMuted:'#33290F',
+    danger:'#F0554D', dangerMuted:'#3A1C1A', info:'#58A6FF', infoMuted:'#16283F', neutralState:'#5B6578'
+  }
+} } };
+</script>
+<style>
+  :root{color-scheme:dark}
+  html,body{background:#0B0F14}
+  body{font-feature-settings:'cv02','cv03','cv04','cv11'}
+  .focus-ring:focus-visible{outline:2px solid #7FB2FF;outline-offset:2px;border-radius:6px}
+  .card{background:#121821;border:1px solid #263244}
+  .table :where(th,td){border-color:#263244}
+  .table th{color:#9BA9BC;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  .menu li>a{color:#9BA9BC}
+  .menu li>a:hover{background:#1A2230;color:#E6EDF5}
+</style>
+</head>
+<body class="min-h-screen bg-background text-textPrimary antialiased font-sans text-[14px] leading-[22px]">
+
+  <header class="sticky top-0 z-30 border-b border-border bg-background/85 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 md:px-6">
+      <div class="flex items-center gap-2.5">
+        <div class="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-background">M</div>
+        <span class="text-[15px] font-semibold tracking-tight">MRI&nbsp;Lab</span>
+      </div>
+      <nav class="hidden items-center gap-1 text-[13px] md:flex">
+        <a href="#view" class="focus-ring rounded-md px-3 py-2 text-textSecondary hover:text-textPrimary">View</a>
+        <a href="#compute" class="focus-ring rounded-md px-3 py-2 text-textSecondary hover:text-textPrimary">Compute</a>
+        <a href="#share" class="focus-ring rounded-md px-3 py-2 text-textSecondary hover:text-textPrimary">Share</a>
+        <a href="14-explore.html" class="focus-ring rounded-md px-3 py-2 text-textSecondary hover:text-textPrimary">Explore</a>
+        <a href="#" class="focus-ring rounded-md px-3 py-2 text-textSecondary hover:text-textPrimary">Docs</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a href="02-sign-in.html" class="focus-ring inline-flex h-9 items-center rounded-md px-3 text-[13px] font-medium text-textSecondary hover:text-textPrimary">Sign in</a>
+        <a href="14-explore.html" class="focus-ring inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3.5 text-[13px] font-semibold text-background hover:bg-accentHover">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M12 4v16M4 12h16"/></svg>
+          Open sample scan
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="relative overflow-hidden border-b border-border">
+      <div class="pointer-events-none absolute -top-40 left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-accentMuted opacity-40 blur-3xl"></div>
+      <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:px-6 md:py-24 lg:grid-cols-[1.05fr_.95fr]">
+        <div>
+          <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surfaceMuted px-3 py-1 text-[12px] font-medium text-textSecondary">
+            <span class="h-1.5 w-1.5 rounded-full bg-success"></span>
+            Open-source · Non-clinical research tool
+          </div>
+          <h1 class="text-[40px] font-bold leading-[46px] tracking-tight md:text-[52px] md:leading-[58px]">
+            Explore real brain MRI data, run computational neuroscience experiments, and share reproducible results — all in the cloud.
+          </h1>
+          <p class="mt-5 max-w-xl text-[16px] leading-7 text-textSecondary">
+            MRI Lab is a cloud workbench for NIfTI volumes: a precise multiplanar viewer, versioned processing pipelines, and machine-readable experiment manifests. No server to configure, no data wrangling to reproduce.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="14-explore.html" class="focus-ring inline-flex h-11 items-center gap-2 rounded-md bg-accent px-5 text-[14px] font-semibold text-background hover:bg-accentHover">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><circle cx="12" cy="12" r="8"/><path d="m14.5 9.5-1.8 4.7-4.7 1.8 1.8-4.7Z"/></svg>
+              Explore the sample scan
+            </a>
+            <a href="02-sign-in.html" class="focus-ring inline-flex h-11 items-center gap-2 rounded-md border border-border bg-surfaceMuted px-5 text-[14px] font-medium text-textPrimary hover:bg-surfaceRaised">Sign in</a>
+          </div>
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[12px] text-textMuted">
+            <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-3.5 w-3.5"><path d="m20 6-11 11-5-5"/></svg>Private by default</span>
+            <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-3.5 w-3.5"><path d="m20 6-11 11-5-5"/></svg>SHA-256 provenance</span>
+            <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-3.5 w-3.5"><path d="m20 6-11 11-5-5"/></svg>NIfTI / BIDS aware</span>
+          </div>
+        </div>
+
+        <div class="card rounded-xl p-3 shadow-[0_16px_48px_rgba(0,0,0,0.55)]">
+          <div class="flex items-center justify-between px-1 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-danger"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-warning"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-success"></span>
+              <span class="ml-2 text-[12px] text-textMuted">viewer — IXI sample / T1w</span>
+            </div>
+            <span class="rounded-full bg-successMuted px-2.5 py-0.5 text-[12px] font-medium text-success">ready</span>
+          </div>
+          <div class="relative overflow-hidden rounded-lg border border-border">
+            <svg viewBox="0 0 640 400" class="block w-full" role="img" aria-label="Multiplanar brain MRI preview with three linked planes and crosshair">
+              <rect width="640" height="400" fill="#05080B"/>
+              <g stroke="#1A2230" stroke-width="1">
+                <line x1="220" y1="0" x2="220" y2="400"/>
+                <line x1="426" y1="0" x2="426" y2="400"/>
+                <line x1="0" y1="196" x2="640" y2="196"/>
+              </g>
+              <g>
+                <rect x="18" y="18" width="184" height="164" rx="4" fill="#0B0F14" stroke="#263244"/>
+                <ellipse cx="110" cy="100" rx="62" ry="70" fill="#1A2230"/>
+                <ellipse cx="110" cy="100" rx="52" ry="60" fill="#2A3648"/>
+                <ellipse cx="110" cy="100" rx="40" ry="46" fill="#3B4A60"/>
+                <ellipse cx="92" cy="96" rx="10" ry="14" fill="#4A5B73"/>
+                <ellipse cx="130" cy="96" rx="10" ry="14" fill="#4A5B73"/>
+                <ellipse cx="110" cy="126" rx="16" ry="9" fill="#39465A"/>
+                <line x1="110" y1="40" x2="110" y2="172" stroke="#4C8DFF" stroke-width="1"/>
+                <line x1="34" y1="100" x2="186" y2="100" stroke="#E6EDF5" stroke-width="1"/>
+                <text x="28" y="34" fill="#6B7A90" font-size="11" font-family="monospace">AXIAL · z=98/155</text>
+                <text x="28" y="176" fill="#6B7A90" font-size="10" font-family="monospace">L  R</text>
+              </g>
+              <g>
+                <rect x="222" y="18" width="184" height="164" rx="4" fill="#0B0F14" stroke="#263244"/>
+                <ellipse cx="314" cy="100" rx="66" ry="62" fill="#1A2230"/>
+                <ellipse cx="314" cy="100" rx="56" ry="52" fill="#2A3648"/>
+                <path d="M258 100c20-14 40-20 56-20s36 6 56 20" fill="none" stroke="#3B4A60" stroke-width="10"/>
+                <ellipse cx="296" cy="96" rx="9" ry="12" fill="#4A5B73"/>
+                <ellipse cx="332" cy="96" rx="9" ry="12" fill="#4A5B73"/>
+                <line x1="314" y1="44" x2="314" y2="166" stroke="#4C8DFF" stroke-width="1"/>
+                <line x1="238" y1="100" x2="390" y2="100" stroke="#E6EDF5" stroke-width="1"/>
+                <text x="232" y="34" fill="#6B7A90" font-size="11" font-family="monospace">CORONAL · y=112/180</text>
+                <text x="232" y="176" fill="#6B7A90" font-size="10" font-family="monospace">S</text>
+              </g>
+              <g>
+                <rect x="426" y="18" width="196" height="164" rx="4" fill="#0B0F14" stroke="#263244"/>
+                <ellipse cx="524" cy="100" rx="58" ry="72" fill="#1A2230"/>
+                <ellipse cx="524" cy="100" rx="48" ry="62" fill="#2A3648"/>
+                <ellipse cx="524" cy="88" rx="38" ry="48" fill="#3B4A60"/>
+                <path d="M524 48c-14 20-20 34-20 48s6 26 20 36" fill="none" stroke="#4A5B73" stroke-width="9"/>
+                <line x1="524" y1="40" x2="524" y2="172" stroke="#E6EDF5" stroke-width="1"/>
+                <line x1="446" y1="100" x2="606" y2="100" stroke="#4C8DFF" stroke-width="1"/>
+                <text x="436" y="34" fill="#6B7A90" font-size="11" font-family="monospace">SAGITTAL · x=123/182</text>
+                <text x="436" y="176" fill="#6B7A90" font-size="10" font-family="monospace">A  P</text>
+              </g>
+              <g>
+                <rect x="18" y="206" width="604" height="176" rx="4" fill="#0B0F14" stroke="#263244"/>
+                <ellipse cx="190" cy="294" rx="86" ry="76" fill="#1A2230"/>
+                <ellipse cx="190" cy="294" rx="70" ry="62" fill="#2A3648"/>
+                <ellipse cx="190" cy="294" rx="52" ry="44" fill="#3B4A60"/>
+                <ellipse cx="164" cy="290" rx="12" ry="16" fill="#4A5B73"/>
+                <ellipse cx="216" cy="290" rx="12" ry="16" fill="#4A5B73"/>
+                <path d="M150 330q40 22 80 0" fill="none" stroke="#39465A" stroke-width="6"/>
+                <line x1="190" y1="222" x2="190" y2="366" stroke="#4C8DFF" stroke-width="1"/>
+                <line x1="112" y1="294" x2="268" y2="294" stroke="#E6EDF5" stroke-width="1"/>
+                <text x="28" y="222" fill="#6B7A90" font-size="11" font-family="monospace">3D volume · 182×218×182</text>
+                <g font-family="monospace" font-size="12">
+                  <text x="332" y="252" fill="#6B7A90">VOXEL</text>
+                  <text x="332" y="272" fill="#E6EDF5">(123, 112, 98)</text>
+                  <text x="332" y="300" fill="#6B7A90">WORLD</text>
+                  <text x="332" y="320" fill="#E6EDF5">(12.3, -45.6, 78.9) mm</text>
+                  <text x="332" y="348" fill="#6B7A90">SPACE</text>
+                  <text x="332" y="368" fill="#58A6FF">RAS+ / MNI152</text>
+                  <text x="470" y="252" fill="#6B7A90">REGION</text>
+                  <text x="470" y="272" fill="#B07CFF">Left Hippocampus</text>
+                  <text x="470" y="300" fill="#6B7A90">ATLAS</text>
+                  <text x="470" y="320" fill="#E6EDF5">AAL v3</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="view" class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+      <div class="mb-10 max-w-2xl">
+        <div class="mb-2 text-[12px] font-semibold uppercase tracking-wider text-textMuted">Capabilities</div>
+        <h2 class="text-[28px] font-semibold leading-9 tracking-tight">A viewer and a lab on the same project and artifact system</h2>
+        <p class="mt-2 text-[14px] text-textSecondary">Display transforms are never recorded as analytical inputs. The volume is the primary content; everything else recedes.</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        <div class="card rounded-lg p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-accentMuted text-accent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M12 4v16M4 12h16"/></svg>
+          </div>
+          <h3 class="text-[18px] font-semibold">View</h3>
+          <p class="mt-2 text-[14px] text-textSecondary">Linked axial, coronal, and sagittal planes with a shared crosshair, window/level, colour maps, and atlas or mask overlays registered through the volume affine.</p>
+          <ul class="mt-4 space-y-2 text-[13px] text-textSecondary">
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Voxel and world coordinate readout with explicit coordinate space</li>
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Region inspection tagged with atlas name and space</li>
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Colour-blind-safe maps by default</li>
+          </ul>
+        </div>
+        <div id="compute" class="card rounded-lg p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-accentMuted text-accent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg>
+          </div>
+          <h3 class="text-[18px] font-semibold">Compute</h3>
+          <p class="mt-2 text-[14px] text-textSecondary">Run versioned pipelines in isolated containers — Gaussian smoothing, skull stripping, resampling — with explicit resource limits and honest status feedback.</p>
+          <ul class="mt-4 space-y-2 text-[13px] text-textSecondary">
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Immutable pipeline versions pinned by image digest</li>
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Parameters rendered from a typed schema with units</li>
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Streamed logs that never leak credentials or raw voxels</li>
+          </ul>
+        </div>
+        <div id="share" class="card rounded-lg p-6">
+          <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-accentMuted text-accent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="m8.6 10.6 6.8-3.2M8.6 13.4l6.8 3.2"/></svg>
+          </div>
+          <h3 class="text-[18px] font-semibold">Share</h3>
+          <p class="mt-2 text-[14px] text-textSecondary">Every completed run produces a machine-readable manifest with input checksums, parameters, environment, and outputs — so a collaborator can reproduce it, not just read about it.</p>
+          <ul class="mt-4 space-y-2 text-[13px] text-textSecondary">
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Copyable provenance and SHA-256 checksums</li>
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Scoped sharing links with expiry and revoke</li>
+            <li class="flex items-start gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"></span>Public sample projects with visible licence and citation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-border bg-surface/40">
+      <div class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+        <div class="mb-8 max-w-2xl">
+          <div class="mb-2 text-[12px] font-semibold uppercase tracking-wider text-textMuted">Start without uploading anything</div>
+          <h2 class="text-[28px] font-semibold leading-9 tracking-tight">Public sample project</h2>
+        </div>
+        <div class="card grid gap-6 rounded-xl p-6 md:grid-cols-[1fr_1.2fr]">
+          <div class="overflow-hidden rounded-lg border border-border">
+            <svg viewBox="0 0 320 220" class="block w-full" role="img" aria-label="IXI sample brain thumbnail">
+              <rect width="320" height="220" fill="#05080B"/>
+              <g stroke="#1A2230"><line x1="160" y1="0" x2="160" y2="220"/><line x1="0" y1="110" x2="320" y2="110"/></g>
+              <ellipse cx="160" cy="0" rx="72" ry="0"/>
+              <ellipse cx="80" cy="110" rx="46" ry="52" fill="#1A2230"/>
+              <ellipse cx="80" cy="110" rx="36" ry="42" fill="#2A3648"/>
+              <ellipse cx="240" cy="110" rx="46" ry="52" fill="#1A2230"/>
+              <ellipse cx="240" cy="110" rx="36" ry="42" fill="#2A3648"/>
+              <ellipse cx="80" cy="110" rx="20" ry="24" fill="#3B4A60"/>
+              <ellipse cx="240" cy="110" rx="20" ry="24" fill="#3B4A60"/>
+              <text x="14" y="26" fill="#6B7A90" font-size="11" font-family="monospace">IXI-sample · T1w</text>
+            </svg>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 class="text-[18px] font-semibold">IXI Sample Brain — T1w</h3>
+              <span class="inline-flex items-center gap-1 rounded-full bg-accentMuted px-2.5 py-0.5 text-[12px] font-medium text-accent">public sample</span>
+              <span class="inline-flex items-center gap-1 rounded-full bg-successMuted px-2.5 py-0.5 text-[12px] font-medium text-success"><span class="h-1.5 w-1.5 rounded-full bg-current"></span>validated</span>
+            </div>
+            <p class="mt-3 text-[14px] text-textSecondary">
+              A single anonymised T1-weighted anatomical volume from the IXI dataset, co-registered to MNI152 with an accompanying AAL v3 label atlas. Explore it read-only, inspect regions, then sign in to save a view or submit a run.
+            </p>
+            <dl class="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-[13px] sm:grid-cols-3">
+              <div><dt class="text-textMuted">Modality</dt><dd class="mt-0.5 font-mono text-textPrimary">T1w</dd></div>
+              <div><dt class="text-textMuted">Dimensions</dt><dd class="mt-0.5 font-mono text-textPrimary">182×218×182</dd></div>
+              <div><dt class="text-textMuted">Voxel spacing</dt><dd class="mt-0.5 font-mono text-textPrimary">1.0 mm iso</dd></div>
+              <div><dt class="text-textMuted">Data type</dt><dd class="mt-0.5 font-mono text-textPrimary">int16</dd></div>
+              <div><dt class="text-textMuted">Orientation</dt><dd class="mt-0.5 font-mono text-textPrimary">RAS+</dd></div>
+              <div><dt class="text-textMuted">Format</dt><dd class="mt-0.5 font-mono text-textPrimary">.nii.gz</dd></div>
+            </dl>
+            <div class="mt-5 rounded-md border border-border bg-surfaceMuted p-3 font-mono text-[12px] leading-5 text-textSecondary">
+              sha256:9f3c1a7b4e…d204e8c6a11f5b93
+            </div>
+            <p class="mt-4 text-[12px] leading-5 text-textMuted">
+              Licence: CC BY-SA 4.0 · Cite: “IXI Dataset, Imperial College London” and the atlas publication. Attribution is shown with the sample and is never hidden behind an interaction. Not for clinical use.
+            </p>
+            <div class="mt-5 flex flex-wrap gap-3">
+              <a href="14-explore.html" class="focus-ring inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3.5 text-[13px] font-semibold text-background hover:bg-accentHover">Open sample scan</a>
+              <a href="#" class="focus-ring inline-flex h-9 items-center gap-2 rounded-md border border-border bg-surfaceMuted px-3.5 text-[13px] font-medium text-textPrimary hover:bg-surfaceRaised">Read the citation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-border">
+      <div class="mx-auto max-w-6xl px-4 py-16 md:px-6">
+        <div class="card flex flex-col items-start justify-between gap-6 rounded-xl bg-gradient-to-br from-surface to-accentMuted/40 p-8 md:flex-row md:items-center">
+          <div class="max-w-xl">
+            <h2 class="text-[22px] font-semibold leading-8">From “I found an MRI dataset” to a shareable result</h2>
+            <p class="mt-2 text-[14px] text-textSecondary">Create a project, upload a NIfTI volume, open the viewer, and run your first preprocessing pipeline in minutes.</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href="02-sign-in.html" class="focus-ring inline-flex h-11 items-center gap-2 rounded-md bg-accent px-5 text-[14px] font-semibold text-background hover:bg-accentHover">Create an account</a>
+            <a href="14-explore.html" class="focus-ring inline-flex h-11 items-center gap-2 rounded-md border border-border bg-surfaceMuted px-5 text-[14px] font-medium text-textPrimary hover:bg-surfaceRaised">Open sample scan</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-border bg-surface/40">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-4 md:px-6">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <div class="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-background">M</div>
+          <span class="text-[15px] font-semibold tracking-tight">MRI&nbsp;Lab</span>
+        </div>
+        <p class="mt-3 max-w-xs text-[13px] text-textMuted">A cloud-based computational neuroimaging workbench for developers and computational neuroscience enthusiasts.</p>
+      </div>
+      <div>
+        <div class="text-[12px] font-semibold uppercase tracking-wider text-textMuted">Product</div>
+        <ul class="mt-3 space-y-2 text-[13px]">
+          <li><a href="#view" class="focus-ring text-textSecondary hover:text-textPrimary">Viewer</a></li>
+          <li><a href="#compute" class="focus-ring text-textSecondary hover:text-textPrimary">Pipelines</a></li>
+          <li><a href="14-explore.html" class="focus-ring text-textSecondary hover:text-textPrimary">Explore samples</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Changelog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[12px] font-semibold uppercase tracking-wider text-textMuted">Documentation</div>
+        <ul class="mt-3 space-y-2 text-[13px]">
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Getting started</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">NIfTI and BIDS</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">REST API</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Python SDK</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="text-[12px] font-semibold uppercase tracking-wider text-textMuted">Legal</div>
+        <ul class="mt-3 space-y-2 text-[13px]">
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Licence</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Privacy policy</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Terms of use</a></li>
+          <li><a href="#" class="focus-ring text-textSecondary hover:text-textPrimary">Citation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-border">
+      <div class="mx-auto flex max-w-6xl flex-col justify-between gap-2 px-4 py-5 text-[12px] text-textMuted md:flex-row md:px-6">
+        <span>© 2026 MRI Lab · Research and educational use only. Not a medical device.</span>
+        <span class="font-mono">v0.1.0 · prototype</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

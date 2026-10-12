@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MRI Lab — Viewer</title>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Inter','ui-sans-serif','system-ui','-apple-system','BlinkMacSystemFont','Segoe UI','sans-serif'], mono: ['ui-monospace','SFMono-Regular','Menlo','Monaco','Consolas','monospace'] },
+  colors: {
+    background:'#0B0F14', surface:'#121821', surfaceMuted:'#1A2230', surfaceRaised:'#212B3A',
+    border:'#263244', borderStrong:'#35455C', textPrimary:'#E6EDF5', textSecondary:'#9BA9BC', textMuted:'#6B7A90',
+    accent:'#4C8DFF', accentHover:'#6BA1FF', accentMuted:'#1C3355',
+    success:'#3FB950', successMuted:'#16301F', warning:'#D9A441', warningMuted:'#33290F',
+    danger:'#F0554D', dangerMuted:'#3A1C1A', info:'#58A6FF', infoMuted:'#16283F', neutralState:'#5B6578',
+    canvas:'#05080B', atlas:'#B07CFF', mask:'#3FB950', annotation:'#F0554D', measurement:'#D9A441'
+  }
+} } };
+</script>
+<style>
+  :root{color-scheme:dark}
+  html,body{background:#0B0F14}
+  body{font-feature-settings:'cv02','cv03','cv04','cv11'}
+  .focus-ring:focus-visible{outline:2px solid #7FB2FF;outline-offset:2px;border-radius:6px}
+  .card{background:#121821;border:1px solid #263244}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:4px;border-radius:999px;background:#263244;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;height:14px;width:14px;border-radius:999px;background:#E6EDF5;border:2px solid #4C8DFF;cursor:pointer}
+  .vp-label{position:absolute;top:8px;left:10px;font-size:11px;font-weight:600;letter-spacing:.08em;color:#9BA9BC}
+  .vp-idx{position:absolute;top:8px;right:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:#6B7A90}
+  .vp-orient{position:absolute;font-size:10px;font-weight:600;letter-spacing:.06em;color:#6B7A90}
+</style>
+</head>
+<body class="h-screen overflow-hidden bg-background text-textPrimary antialiased font-sans text-[14px] leading-[22px]">
+<div class="flex h-screen">
+  <aside class="hidden w-60 shrink-0 flex-col border-r border-border bg-surface md:flex">
+    <div class="flex h-14 items-center gap-2.5 border-b border-border px-4">
+      <div class="flex h-7 w-7 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-background">M</div>
+      <span class="text-[15px] font-semibold tracking-tight">MRI&nbsp;Lab</span>
+    </div>
+    <nav class="flex-1 space-y-0.5 overflow-y-auto p-2 text-sm">
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Home</a>
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>Projects</a>
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>Datasets</a>
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md bg-accentMuted px-3 py-2 font-medium text-textPrimary"><svg class="h-4 w-4 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M12 4v16M4 12h16"/></svg>Viewer</a>
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 10h3M4 14h3M17 10h3M17 14h3M10 4v3M14 4v3M10 17v3M14 17v3"/></svg>Pipelines</a>
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="m14.5 9.5-1.8 4.7-4.7 1.8 1.8-4.7Z"/></svg>Explore</a>
+      <a href="#" class="focus-ring flex items-center gap-3 rounded-md px-3 py-2 text-textSecondary hover:bg-surfaceMuted hover:text-textPrimary"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2-1.2L14.2 3H9.8L9.4 5.7a7 7 0 0 0-2 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2 1.2l.4 2.7h4.4l.4-2.7a7 7 0 0 0 2-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z"/></svg>Settings</a>
+    </nav>
+    <div class="border-t border-border px-4 py-3 text-[11px] text-textMuted">v0.1.0 · prototype</div>
+  </aside>
+
+  <div class="flex min-w-0 flex-1 flex-col">
+    <header class="flex h-14 shrink-0 items-center justify-between gap-4 border-b border-border bg-surface px-4 md:px-6">
+      <div class="flex min-w-0 items-center gap-2 text-[13px]">
+        <button class="focus-ring flex items-center gap-2 rounded-md border border-border bg-surfaceMuted px-3 py-1.5"><span class="text-textMuted">Project</span><span class="font-medium">IXI Brain Atlas</span><span class="rounded bg-accentMuted px-1.5 text-[11px] text-accent">private</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-3.5 w-3.5"><path d="m6 9 6 6 6-6"/></svg></button>
+        <span class="text-textMuted">/</span>
+        <span class="truncate font-medium">IXI002-Guys-0828-T1</span>
+        <span class="rounded bg-surfaceMuted px-1.5 font-mono text-[11px] text-textSecondary">v2</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-successMuted px-2.5 py-0.5 text-[12px] font-medium text-success"><span class="h-1.5 w-1.5 rounded-full bg-current"></span>Ready</span>
+        <button class="focus-ring inline-flex h-9 items-center gap-2 rounded-md border border-border bg-surfaceMuted px-3.5 text-[13px] font-medium text-textPrimary hover:bg-surfaceRaised"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-4 w-4"><rect x="3" y="5" width="7" height="14" rx="1"/><rect x="14" y="5" width="7" height="14" rx="1"/></svg>Open in Compare</button>
+        <button class="focus-ring inline-flex h-9 items-center gap-2 rounded-md bg-accent px-3.5 text-[13px] font-semibold text-background hover:bg-accentHover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-4 w-4"><path d="M5 12h14M12 5v14"/></svg>Save view state</button>
+      </div>
+    </header>
+
+    <div class="flex min-h-0 flex-1">
+      <aside class="hidden w-64 shrink-0 overflow-y-auto border-r border-border bg-surface p-4 lg:block">
+        <div class="mb-2 text-[11px] font-semibold uppercase tracking-wider text-textMuted">Display</div>
+        <div class="space-y-4">
+          <div>
+            <label class="mb-1.5 block text-[12px] text-textSecondary">Colour map</label>
+            <select class="focus-ring h-8 w-full rounded-md border border-border bg-surfaceMuted px-2.5 text-[13px] text-textPrimary"><option>gray (default)</option><option>bone</option><option>viridis</option><option>cividis</option><option>inferno</option></select>
+            <div class="mt-2 h-2 w-full rounded-full" style="background:linear-gradient(90deg,#000,#3a3a3a,#8a8a8a,#d0d0d0,#fff)"></div>
+          </div>
+          <div>
+            <div class="mb-1.5 flex items-center justify-between text-[12px]"><span class="text-textSecondary">Window / level</span><span class="font-mono text-textMuted">W 820 L 410</span></div>
+            <input type="range" min="0" max="100" value="62" class="focus-ring w-full" />
+          </div>
+          <div>
+            <div class="mb-1.5 flex items-center justify-between text-[12px]"><span class="text-textSecondary">Brightness</span><span class="font-mono text-textMuted">+8%</span></div>
+            <input type="range" min="0" max="100" value="54" class="focus-ring w-full" />
+          </div>
+          <div>
+            <div class="mb-1.5 flex items-center justify-between text-[12px]"><span class="text-textSecondary">Zoom</span><span class="font-mono text-textMuted">1.6×</span></div>
+            <input type="range" min="0" max="100" value="46" class="focus-ring w-full" />
+          </div>
+        </div>
+
+        <div class="mt-6 mb-2 text-[11px] font-semibold uppercase tracking-wider text-textMuted">Overlays</div>
+        <div class="space-y-3">
+          <label class="flex items-center gap-2 text-[13px] text-textPrimary"><input type="checkbox" checked class="checkbox checkbox-xs rounded border-border" style="--chkbg:#B07CFF" /><span class="flex-1">Atlas</span><span class="rounded bg-surfaceMuted px-1.5 py-0.5 font-mono text-[11px] text-atlas">AAL</span></label>
+          <div><div class="mb-1 flex items-center justify-between text-[12px]"><span class="text-textMuted">Atlas opacity</span><span class="font-mono text-textMuted">45%</span></div><input type="range" min="0" max="100" value="45" class="focus-ring w-full" /></div>
+          <label class="flex items-center gap-2 text-[13px] text-textPrimary"><input type="checkbox" class="checkbox checkbox-xs rounded border-border" style="--chkbg:#3FB950" /><span class="flex-1">Mask</span><span class="rounded bg-surfaceMuted px-1.5 py-0.5 font-mono text-[11px] text-textMuted">none</span></label>
+          <label class="flex items-center gap-2 text-[13px] text-textPrimary"><input type="checkbox" checked class="checkbox checkbox-xs rounded border-border" /><span class="flex-1">Crosshair readout</span></label>
+        </div>
+
+        <div class="mt-6 mb-2 text-[11px] font-semibold uppercase tracking-wider text-textMuted">Annotations</div>
+        <ul class="space-y-2 text-[12px]">
+          <li class="rounded-md border border-border bg-surfaceMuted p-2">
+            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-annotation"></span><span class="font-medium">Left Hippocampus ROI</span></div>
+            <div class="mt-1 font-mono text-[11px] text-textMuted">vox 123,145,98 · MNI</div>
+          </li>
+          <li class="rounded-md border border-border bg-surfaceMuted p-2">
+            <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-annotation"></span><span class="font-medium">Note: check GM/WM contrast</span></div>
+            <div class="mt-1 font-mono text-[11px] text-textMuted">vox 98,110,132 · MNI</div>
+          </li>
+        </ul>
+        <div class="mt-4 flex gap-2">
+          <button class="focus-ring inline-flex h-8 flex-1 items-center justify-center rounded-md border border-border bg-surfaceMuted text-[12px] font-medium text-textPrimary hover:bg-surfaceRaised">Reset view</button>
+        </div>
+      </aside>
+
+      <div class="grid min-w-0 flex-1 grid-cols-2 grid-rows-2 gap-px bg-border" style="background:#05080B">
+        <!-- AXIAL (focused) -->
+        <div class="relative overflow-hidden bg-canvas">
+          <svg viewBox="0 0 300 300" class="h-full w-full" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+              <radialGradient id="brA" cx="50%" cy="48%" r="55%"><stop offset="0%" stop-color="#b9c1cb"/><stop offset="70%" stop-color="#8f98a4"/><stop offset="100%" stop-color="#707a87"/></radialGradient>
+            </defs>
+            <rect width="300" height="300" fill="#05080B"/>
+            <ellipse cx="150" cy="150" rx="118" ry="128" fill="#c9ced6" opacity="0.9"/>
+            <ellipse cx="150" cy="150" rx="112" ry="121" fill="#3a4049"/>
+            <ellipse cx="150" cy="150" rx="104" ry="113" fill="url(#brA)" filter="url(#soft)"/>
+            <path d="M150 40 v220" stroke="#4a515c" stroke-width="2" opacity="0.7"/>
+            <path d="M70 90 q40 30 30 80 q-8 44 -30 60" fill="none" stroke="#6f7987" stroke-width="3" opacity="0.8"/>
+            <path d="M230 90 q-40 30 -30 80 q8 44 30 60" fill="none" stroke="#6f7987" stroke-width="3" opacity="0.8"/>
+            <path d="M92 70 q30 40 22 90" fill="none" stroke="#7d8795" stroke-width="2" opacity="0.6"/>
+            <path d="M208 70 q-30 40 -22 90" fill="none" stroke="#7d8795" stroke-width="2" opacity="0.6"/>
+            <path d="M132 118 q18 -10 36 0 q6 22 -18 30 q-24 -8 -18 -30Z" fill="#5a6470" opacity="0.85"/>
+            <path d="M126 176 q24 16 48 0 q-6 26 -24 26 q-18 0 -24 -26Z" fill="#5a6470" opacity="0.7"/>
+            <ellipse cx="66" cy="150" rx="10" ry="16" fill="#8f98a4"/><ellipse cx="234" cy="150" rx="10" ry="16" fill="#8f98a4"/>
+            <ellipse cx="150" cy="262" rx="26" ry="14" fill="#7d8795"/>
+          </svg>
+          <span class="vp-label">AXIAL</span><span class="vp-idx">98 / 150</span>
+          <span class="vp-orient" style="left:50%;bottom:8px;transform:translateX(-50%)">A</span>
+          <span class="vp-orient" style="top:22px;left:50%;transform:translateX(-50%)">P</span>
+          <span class="vp-orient" style="left:8px;top:50%">R</span>
+          <span class="vp-orient" style="right:8px;top:50%">L</span>
+          <div class="pointer-events-none absolute inset-0">
+            <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:#4C8DFF;box-shadow:0 0 6px #4C8DFF"></div>
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#4C8DFF;box-shadow:0 0 6px #4C8DFF"></div>
+            <div style="position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:2px;border:2px solid #4C8DFF"></div>
+          </div>
+        </div>
+
+        <!-- CORONAL -->
+        <div class="relative overflow-hidden bg-canvas">
+          <svg viewBox="0 0 300 300" class="h-full w-full" preserveAspectRatio="xMidYMid meet">
+            <defs><radialGradient id="brC" cx="50%" cy="42%" r="58%"><stop offset="0%" stop-color="#b9c1cb"/><stop offset="72%" stop-color="#8f98a4"/><stop offset="100%" stop-color="#707a87"/></radialGradient></defs>
+            <rect width="300" height="300" fill="#05080B"/>
+            <ellipse cx="150" cy="142" rx="116" ry="112" fill="#c9ced6" opacity="0.9"/>
+            <ellipse cx="150" cy="142" rx="110" ry="106" fill="#3a4049"/>
+            <path d="M150 36 q74 6 96 74 q14 52 -6 92 q-16 34 -44 40 q-20 4 -46 4 q-26 0 -46 -4 q-28 -6 -44 -40 q-20 -40 -6 -92 q22 -68 96 -74Z" fill="url(#brC)" filter="url(#soft)"/>
+            <path d="M150 44 v210" stroke="#4a515c" stroke-width="2" opacity="0.75"/>
+            <path d="M96 118 q-14 34 6 66 q10 16 26 20" fill="none" stroke="#79838f" stroke-width="2.5" opacity="0.7"/>
+            <path d="M204 118 q14 34 -6 66 q-10 16 -26 20" fill="none" stroke="#79838f" stroke-width="2.5" opacity="0.7"/>
+            <ellipse cx="120" cy="150" rx="10" ry="20" fill="#5a6470" opacity="0.85"/>
+            <ellipse cx="180" cy="150" rx="10" ry="20" fill="#5a6470" opacity="0.85"/>
+            <path d="M138 150 q12 -8 24 0 q-6 30 -12 40 q-6 -10 -12 -40Z" fill="#5a6470" opacity="0.7"/>
+            <path d="M142 220 q8 34 8 52 q0 -18 8 -52Z" fill="#7d8795"/>
+          </svg>
+          <span class="vp-label">CORONAL</span><span class="vp-idx">112 / 180</span>
+          <span class="vp-orient" style="left:8px;top:50%">R</span>
+          <span class="vp-orient" style="right:8px;top:50%">L</span>
+          <span class="vp-orient" style="top:22px;left:50%;transform:translateX(-50%)">S</span>
+          <div class="pointer-events-none absolute inset-0">
+            <div style="position:absolute;top:52%;left:0;right:0;height:1px;background:#E6EDF5;opacity:.85"></div>
+            <div style="position:absolute;left:41%;top:0;bottom:0;width:1px;background:#E6EDF5;opacity:.85"></div>
+          </div>
+        </div>
+
+        <!-- SAGITTAL -->
+        <div class="relative overflow-hidden bg-canvas">
+          <svg viewBox="0 0 300 300" class="h-full w-full" preserveAspectRatio="xMidYMid meet">
+            <defs><radialGradient id="brS" cx="46%" cy="46%" r="58%"><stop offset="0%" stop-color="#b9c1cb"/><stop offset="72%" stop-color="#8f98a4"/><stop offset="100%" stop-color="#707a87"/></radialGradient></defs>
+            <rect width="300" height="300" fill="#05080B"/>
+            <ellipse cx="146" cy="140" rx="110" ry="116" fill="#c9ced6" opacity="0.9"/>
+            <ellipse cx="146" cy="140" rx="104" ry="110" fill="#3a4049"/>
+            <path d="M170 30 q70 20 80 86 q8 58 -34 100 q-30 30 -74 34 q-46 4 -74 -26 q-30 -32 -24 -84 q6 -50 46 -84 q36 -30 80 -26Z" fill="url(#brS)" filter="url(#soft)"/>
+            <path d="M92 120 q30 -20 62 -8" fill="none" stroke="#79838f" stroke-width="2.5" opacity="0.7"/>
+            <path d="M84 158 q40 -16 74 2" fill="none" stroke="#79838f" stroke-width="2.5" opacity="0.7"/>
+            <path d="M96 196 q36 -8 64 8" fill="none" stroke="#79838f" stroke-width="2.5" opacity="0.6"/>
+            <path d="M170 96 q18 12 16 40 q-2 30 -22 40 q-14 -20 -12 -44 q2 -22 18 -36Z" fill="#5a6470" opacity="0.8"/>
+            <ellipse cx="120" cy="248" rx="30" ry="20" fill="#7d8795"/>
+            <ellipse cx="152" cy="240" rx="14" ry="12" fill="#8f98a4"/>
+          </svg>
+          <span class="vp-label">SAGITTAL</span><span class="vp-idx">123 / 256</span>
+          <span class="vp-orient" style="top:22px;left:50%;transform:translateX(-50%)">S</span>
+          <span class="vp-orient" style="left:8px;top:50%">A</span>
+          <span class="vp-orient" style="right:8px;top:50%">P</span>
+          <div class="pointer-events-none absolute inset-0">
+            <div style="position:absolute;top:48%;left:0;right:0;height:1px;background:#E6EDF5;opacity:.85"></div>
+            <div style="position:absolute;left:41%;top:0;bottom:0;width:1px;background:#E6EDF5;opacity:.85"></div>
+          </div>
+        </div>
+
+        <!-- READOUT -->
+        <div class="relative overflow-hidden bg-canvas p-4 font-mono text-[12.5px]">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-textMuted" style="font-family:Inter,sans-serif">Cursor</div>
+          <dl class="mt-3 space-y-2.5">
+            <div class="flex items-center justify-between"><dt class="text-textMuted">Voxel</dt><dd class="text-textPrimary">123, 145, 98</dd></div>
+            <div class="flex items-center justify-between"><dt class="text-textMuted">World</dt><dd class="text-textPrimary">12.3, -45.6, 78.9 mm</dd></div>
+            <div class="flex items-center justify-between"><dt class="text-textMuted">Space</dt><dd class="text-accent">RAS+ / MNI152</dd></div>
+            <div class="flex items-center justify-between"><dt class="text-textMuted">Intensity</dt><dd class="text-textPrimary">684.20</dd></div>
+          </dl>
+          <div class="mt-4 border-t border-border pt-3">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-textMuted" style="font-family:Inter,sans-serif">Region</div>
+            <div class="mt-2 flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-sm" style="background:#B07CFF"></span>
+              <span class="text-[13px] text-textPrimary" style="font-family:Inter,sans-serif">Left Hippocampus</span>
+            </div>
+            <div class="mt-1 text-[11px] text-textMuted">atlas: AAL v3 · MNI152 · p=0.94</div>
+            <div class="mt-1 text-[11px] text-textMuted">Right Hippocampus · p=0.06</div>
+          </div>
+          <div class="mt-4 border-t border-border pt-3 text-[11px] text-textMuted">
+            <div>shape 256 × 256 × 150</div>
+            <div>spacing 1.00 × 1.00 × 1.00 mm</div>
+            <div>dtype float32 · orient RAS+</div>
+          </div>
+          <button class="focus-ring mt-3 inline-flex h-7 items-center gap-1.5 rounded-md border border-border bg-surfaceMuted px-2 text-[11px] text-textSecondary" style="font-family:Inter,sans-serif">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" class="h-3.5 w-3.5"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy coordinates
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex h-11 shrink-0 items-center justify-between border-t border-border bg-surface px-4 text-[12px]">
+      <div class="flex items-center gap-2">
+        <span class="text-textMuted">Annotation</span>
+        <button class="focus-ring inline-flex h-7 items-center gap-1.5 rounded-md border border-border bg-surfaceMuted px-2.5 text-textPrimary">Point</button>
+        <button class="focus-ring inline-flex h-7 items-center gap-1.5 rounded-md border border-border bg-surfaceMuted px-2.5 text-textSecondary">Region</button>
+        <button class="focus-ring inline-flex h-7 items-center gap-1.5 rounded-md border border-border bg-surfaceMuted px-2.5 text-textSecondary">Note</button>
+      </div>
+      <div class="flex items-center gap-4 font-mono text-[11px] text-textMuted">
+        <span>Axial 98/150</span><span>Coronal 112/180</span><span>Sagittal 123/256</span>
+        <span class="text-textSecondary">Rendering: display transform only — source volume unmodified</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
