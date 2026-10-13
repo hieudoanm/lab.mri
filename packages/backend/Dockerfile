@@ -2,7 +2,7 @@
 # Multi-stage build for smaller production image
 
 # Stage 1: Build dependencies
-FROM python:3.14-slim AS builder
+FROM python:3.15-slim AS builder
 
 WORKDIR /app
 
@@ -22,7 +22,7 @@ COPY packages/backend/pyproject.toml packages/backend/uv.lock ./
 RUN uv sync --frozen --no-dev
 
 # Stage 2: Runtime
-FROM python:3.14-slim AS runtime
+FROM python:3.15-slim AS runtime
 
 WORKDIR /app
 
