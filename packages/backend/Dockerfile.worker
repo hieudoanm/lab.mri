@@ -1,7 +1,7 @@
 # Worker Dockerfile
 # Uses the same base as API but runs Celery worker
 
-FROM python:3.14-slim AS builder
+FROM python:3.15-slim AS builder
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY packages/backend/pyproject.toml packages/backend/uv.lock ./
 
 RUN uv sync --frozen --no-dev
 
-FROM python:3.14-slim AS runtime
+FROM python:3.15-slim AS runtime
 
 WORKDIR /app
 
