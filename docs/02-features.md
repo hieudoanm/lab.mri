@@ -6,14 +6,14 @@ This document describes how MRI Lab features should behave from the user's persp
 
 It complements:
 
-- `01-overview.md` — product vision and scope.
-- `02-requirements.md` — functional and non-functional requirements (FR-001..FR-022).
+- `00-overview.md` — product vision and scope.
+- `01-requirements.md` — functional and non-functional requirements (FR-001..FR-022).
 - `03-user-stories.md` — user goals and acceptance scenarios.
-- `05-architecture.md` — system boundaries and technical responsibilities.
-- `06-data-model.md` — entities, relationships, and constraints.
-- `07-api-specification.md` — REST endpoints and request/response models.
+- `04-architecture.md` — system boundaries and technical responsibilities.
+- `05-data-model.md` — entities, relationships, and constraints.
+- `06-api-specification.md` — REST endpoints and request/response models.
 - `08-tech-stack.md` — technology choices and rationale.
-- `09-design.md` — interface and interaction design.
+- `07-ui-ux-design.md` — interface and interaction design.
 
 Features should be delivered in vertical slices: a user should be able to complete a useful workflow through the frontend, API, database, and relevant background services before the next major workflow is started.
 
@@ -21,7 +21,7 @@ The canonical entities referenced throughout are `users`, `projects`, `project_m
 
 MRI Lab is a research-software demonstration. It does not diagnose conditions, recommend treatment, or claim clinical or regulatory validity.
 
-Each feature section below states its **user-visible behaviour**, **inputs**, **outputs**, **states**, **edge cases**, and **acceptance conditions**. Priority references map to the P0–P3 definitions in section 2 and to functional requirements FR-001..FR-022 in `02-requirements.md`.
+Each feature section below states its **user-visible behaviour**, **inputs**, **outputs**, **states**, **edge cases**, and **acceptance conditions**. Priority references map to the P0–P3 definitions in section 2 and to functional requirements FR-001..FR-022 in `01-requirements.md`.
 
 ## 2. Feature Priorities
 

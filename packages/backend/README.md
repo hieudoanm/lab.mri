@@ -33,4 +33,4 @@ packages/backend/
 
 ## Conventions
 
-See `AGENTS.md` at the repository root. The governing documents are `docs/07-api-spec.md`, `docs/06-data-model.md`, and `docs/05-architecture.md`.
+See `AGENTS.md` at the repository root. The governing documents are `docs/06-api-specification.md`, `docs/05-data-model.md`, and `docs/04-architecture.md`.

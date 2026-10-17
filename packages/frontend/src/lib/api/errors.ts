@@ -23,7 +23,7 @@ const isErrorDetail = (value: unknown): value is ApiErrorDetail => {
 
 /**
  * A normalised API failure. Error codes come from the documented envelope
- * (docs/07-api-spec.md §4); unexpected shapes fall back to safe defaults.
+ * (docs/06-api-specification.md §4); unexpected shapes fall back to safe defaults.
  */
 export class ApiError extends Error {
   readonly status: number;

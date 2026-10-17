@@ -7,10 +7,10 @@ This document defines the user goals MRI Lab must support and the conditions und
 User stories are organised by role and workflow. They complement:
 
 - `README.md` — product specification, personas, functional requirements (FR-001..FR-022), and user journeys A–D.
-- `01-overview.md` — product vision, target users, and MVP definition of done.
-- `docs/api-specs/` — REST endpoint contracts.
-- `docs/database/` — schema, migrations, and integrity rules.
-- `docs/design/` — interface and interaction design.
+- `00-overview.md` — product vision, target users, and MVP definition of done.
+- `docs/06-api-specification/` — REST endpoint contracts.
+- `docs/05-data-model/` — schema, migrations, and integrity rules.
+- `docs/07-ui-ux-design/` — interface and interaction design.
 
 Acceptance criteria should be used by developers, reviewers, and automated tests. They must describe observable behaviour rather than prescribe unnecessary implementation details. Each story lists its priority (P0–P3), the functional requirements it satisfies, and the user journeys it supports.
 
@@ -54,7 +54,7 @@ Acceptance criteria should be used by developers, reviewers, and automated tests
 
 ### 2.1 Personas
 
-The five personas are defined in `01-overview.md` section 4.
+The five personas are defined in `00-overview.md` section 4.
 
 | Persona                            | Primary goal                                                     |
 | ---------------------------------- | ---------------------------------------------------------------- |
@@ -908,7 +908,7 @@ These rules apply to every story.
 12. Relevant unit, integration, and security tests are added, including negative cross-project access tests.
 13. Important workflows receive end-to-end coverage.
 14. Database changes include migrations using parameterised SQL.
-15. API behaviour is documented and consistent with `docs/api-specs/`.
+15. API behaviour is documented and consistent with `docs/06-api-specification/`.
 16. Staged backend and frontend source changes pass the configured Husky pre-commit checks; CI runs the complete quality gates.
 
 ## 18. MVP Acceptance Checklist
@@ -945,7 +945,7 @@ A user story is complete when all of the following hold.
 3. Loading, empty, success, and failure states are implemented where relevant, and errors are actionable without exposing secrets.
 4. State-changing operations are idempotent or otherwise protected against accidental duplicate submission.
 5. Data changes are delivered through versioned migrations and use parameterised SQL.
-6. API behaviour is documented in `docs/api-specs/` and consistent with the implemented handler.
+6. API behaviour is documented in `docs/06-api-specification/` and consistent with the implemented handler.
 7. Provenance required by the story, such as input versions, parameters, and container image digests, is recorded.
 8. Relevant unit and integration tests are added, and important workflows have end-to-end coverage.
 9. Staged backend and frontend changes pass the configured Husky pre-commit checks, and CI runs the complete quality gates.

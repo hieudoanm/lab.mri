@@ -1,6 +1,6 @@
 /**
- * Domain types for the MRI Lab REST API (docs/07-api-spec.md) and data model
- * (docs/06-data-model.md).
+ * Domain types for the MRI Lab REST API (docs/06-api-specification.md) and data model
+ * (docs/05-data-model.md).
  *
  * These mirror the server contract. JSON field names stay in `snake_case` so no
  * translation layer is required between the API and the UI.

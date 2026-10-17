@@ -96,7 +96,7 @@
 }
 
 /*
- * Lab design tokens (docs/09-design.md §4).
+ * Lab design tokens (docs/07-ui-ux-design.md §4).
  * Token names map to Tailwind utilities, e.g. `--color-surface` -> `bg-surface`.
  * The daisyUI `base-*`/`primary` names are added alongside so components can use
  * either the daisyUI semantic utilities (bg-base-100, text-base-content, …) or

@@ -93,11 +93,11 @@ FastAPI REST API ── explicit SQL ──► PostgreSQL
                                └──► object storage (S3-compatible / local FS)
 ```
 
-Design details live in `docs/05-architecture.md`, `docs/diagrams/architecture.md`, and `docs/diagrams/system-data-flow.md`.
+Design details live in `docs/04-architecture.md`, `docs/04-architecture/architecture.md`, and `docs/04-architecture/system-data-flow.md`.
 
 ## Data Model
 
-Core entities (see `docs/database/mri-lab.dbml` and `docs/06-data-model.md` for schema):
+Core entities (see `docs/05-data-model/mri-lab.dbml` and `docs/05-data-model.md` for schema):
 
 - **Project** — Tenancy boundary; owns datasets, pipelines, runs, annotations
 - **ProjectMembership** — User ↔ Project with role (`owner`, `editor`, `viewer`)
@@ -290,7 +290,7 @@ erDiagram
 | 1   | **Framework**         | [Next.js (App Router)](https://nextjs.org/)                                     | 16.x    | React framework with server components, streaming, partial pre-rendering |
 | 2   | **UI Library**        | [React](https://react.dev/)                                                     | 19.x    | Component model, hooks, concurrent features                              |
 | 3   | **Language**          | [TypeScript](https://www.typescriptlang.org/)                                   | 6.x     | Strict mode, no `any`, end-to-end types                                  |
-| 4   | **Styling**           | [Tailwind CSS](https://tailwindcss.com/)                                        | 4.x     | Utility-first, design tokens from `docs/09-design.md`                    |
+| 4   | **Styling**           | [Tailwind CSS](https://tailwindcss.com/)                                        | 4.x     | Utility-first, design tokens from `docs/07-ui-ux-design.md`                    |
 | 5   | **Component Layer**   | [daisyUI](https://daisyui.com/)                                                 | 5.x     | Accessible, themeable components on Tailwind                             |
 | 6   | **Desktop Wrapper**   | [Tauri](https://tauri.app/)                                                     | 2.x     | Native desktop app (macOS/Windows/Linux) via system WebView              |
 | 7   | **State / Data**      | [TanStack Query](https://tanstack.com/query/latest)                             | 5.x     | Caching, invalidation, optimistic updates                                |
@@ -401,12 +401,12 @@ flowchart TD
 | No  | Document                                                                                                      | Description                                                                                          |
 | --- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | 1   | [`docs/README.md`](docs/README.md)                                                                            | Product strategy document: vision, personas, scope, user journeys, information architecture, roadmap |
-| 2   | [`docs/05-architecture.md`](docs/05-architecture.md)                                                          | Module boundaries, request lifecycle, tenancy, outbox pattern, job state machine                     |
-| 3   | [`docs/06-data-model.md`](docs/06-data-model.md) + [`docs/database/mri-lab.dbml`](docs/database/mri-lab.dbml) | Canonical schema and constraints                                                                     |
-| 4   | [`docs/07-api-spec.md`](docs/07-api-spec.md) + [`docs/api-specs/`](docs/api-specs/)                           | REST contract, OpenAPI 3.1 contract, error envelope                                                  |
-| 5   | [`docs/12-deployment.md`](docs/12-deployment.md)                                                              | Docker Compose topology, local development, production hardening, secrets, metrics, teardown         |
-| 6   | [`docs/diagrams/`](docs/diagrams/)                                                                            | Mermaid diagrams: architecture, system data flow, dataset upload, experiment pipeline, CI/CD         |
-| 7   | [`docs/design/`](docs/design/)                                                                                | HTML design prototype and captured screenshots                                                       |
+| 2   | [`docs/04-architecture.md`](docs/04-architecture.md)                                                          | Module boundaries, request lifecycle, tenancy, outbox pattern, job state machine                     |
+| 3   | [`docs/05-data-model.md`](docs/05-data-model.md) + [`docs/05-data-model/mri-lab.dbml`](docs/05-data-model/mri-lab.dbml) | Canonical schema and constraints                                                                     |
+| 4   | [`docs/06-api-specification.md`](docs/06-api-specification.md) + [`docs/06-api-specification/`](docs/06-api-specification/)                           | REST contract, OpenAPI 3.1 contract, error envelope                                                  |
+| 5   | [`docs/11-deployment.md`](docs/11-deployment.md)                                                              | Docker Compose topology, local development, production hardening, secrets, metrics, teardown         |
+| 6   | [`docs/04-architecture/`](docs/04-architecture/)                                                                            | Mermaid diagrams: architecture, system data flow, dataset upload, experiment pipeline, CI/CD         |
+| 7   | [`docs/07-ui-ux-design/`](docs/07-ui-ux-design/)                                                                                | HTML design prototype and captured screenshots                                                       |
 
 ## License
 

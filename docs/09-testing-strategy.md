@@ -127,7 +127,7 @@ Use the smallest set of tools that provides the required coverage.
 
 ## 5. Test Directory Structure
 
-A possible repository layout, consistent with the module boundaries in `05-architecture.md`:
+A possible repository layout, consistent with the module boundaries in `04-architecture.md`:
 
 ```text
 mri-lab/
@@ -362,7 +362,7 @@ Test all role boundaries:
 
 ### Database-level integrity
 
-Where composite project foreign keys are used (section 23 of `06-data-model.md`), test that PostgreSQL rejects cross-project relationships even when application-level validation is bypassed and a row is inserted directly.
+Where composite project foreign keys are used (section 23 of `05-data-model.md`), test that PostgreSQL rejects cross-project relationships even when application-level validation is bypassed and a row is inserted directly.
 
 ### Query scoping
 

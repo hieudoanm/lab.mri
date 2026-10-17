@@ -250,7 +250,7 @@ stateDiagram-v2
 
 The canonical schema is defined by versioned migrations under
 `packages/backend/app/db/migrations/`. The full column-level definition lives in
-[`../06-data-model.md`](../06-data-model.md).
+[`../05-data-model.md`](../05-data-model.md).
 
 ```mermaid
 erDiagram

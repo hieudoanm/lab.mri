@@ -2,8 +2,8 @@
 
 These diagrams describe the implemented application architecture and data
 flows. They complement the architecture notes in
-[`../05-architecture.md`](../05-architecture.md) and the data model in
-[`../06-data-model.md`](../06-data-model.md).
+[`../04-architecture.md`](../04-architecture.md) and the data model in
+[`../05-data-model.md`](../05-data-model.md).
 
 | Diagram                                                     | Scope                                                                                |
 | ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |

@@ -34,7 +34,7 @@ account settings, and operational health.
 
 The remaining product workflow (NIfTI upload and validation, the multiplanar
 viewer, pipelines, runs, artifacts, and provenance) is specified in
-`docs/03-user-stories.md`, `docs/04-features.md`, and `docs/07-api-spec.md` and
+`docs/03-user-stories.md`, `docs/02-features.md`, and `docs/06-api-specification.md` and
 summarised as **Planned** scenes in §6.
 
 ---
@@ -429,7 +429,7 @@ a failure can be traced to a structured log line.
 ## 6. Planned scenes (documented, not yet wired)
 
 These scenes describe the specified workflow and the endpoints in
-`docs/api-specs/api-spec.yaml`. They are **not** part of the automated recording
+`docs/06-api-specification/api-spec.yaml`. They are **not** part of the automated recording
 and must not be presented as working until implemented.
 
 ### Planned A — Dataset upload and validation
@@ -527,5 +527,5 @@ If you used Option A, run `docker compose -p mri-lab down` instead.
 - `scripts/create_demo.sh` — automation that produced the MP4.
 - `packages/frontend/e2e/create-demo.ts` — the Playwright recorder.
 - `packages/frontend/e2e/smoke.spec.ts` — frontend smoke tests.
-- `docs/03-user-stories.md`, `docs/04-features.md` — normative behaviour.
-- `docs/07-api-spec.md`, `docs/api-specs/api-spec.yaml` — API contract.
+- `docs/03-user-stories.md`, `docs/02-features.md` — normative behaviour.
+- `docs/06-api-specification.md`, `docs/06-api-specification/api-spec.yaml` — API contract.

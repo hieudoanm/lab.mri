@@ -10,20 +10,21 @@ Read `docs/` before implementing. The documents are normative:
 
 | Document                         | Governs                                                |
 | -------------------------------- | ------------------------------------------------------ |
-| `docs/01-overview.md`            | Product vision and scope                               |
-| `docs/02-requirements.md`        | Functional/non-functional requirements (`FR-`, `NFR-`) |
+| `docs/00-overview.md`            | Product vision and scope                               |
+| `docs/01-requirements.md`        | Functional/non-functional requirements (`FR-`, `NFR-`) |
+| `docs/02-features.md`            | User-visible behaviour                                 |
 | `docs/03-user-stories.md`        | User goals and acceptance scenarios                    |
-| `docs/04-features.md`            | User-visible behaviour                                 |
-| `docs/05-architecture.md`        | Module boundaries, request lifecycle, tenancy          |
-| `docs/06-data-model.md`          | Schema, constraints, state transitions                 |
-| `docs/07-api-spec.md`            | REST contract, status codes, error envelope            |
+| `docs/04-architecture.md`        | Module boundaries, request lifecycle, tenancy          |
+| `docs/05-data-model.md`          | Schema, constraints, state transitions                 |
+| `docs/06-api-specification.md`   | REST contract, status codes, error envelope            |
+| `docs/07-ui-ux-design.md`        | UI tokens, layout, states, accessibility               |
 | `docs/08-tech-stack.md`          | Allowed technologies and dependency policy             |
-| `docs/09-design.md`              | UI tokens, layout, states, accessibility               |
-| `docs/10-testing-strategy.md`    | Test layers, fixtures, acceptance criteria             |
-| `docs/11-implementation-plan.md` | Phased delivery plan                                   |
-| `docs/12-deployment.md`          | Operations and deployment                              |
+| `docs/09-testing-strategy.md`    | Test layers, fixtures, acceptance criteria             |
+| `docs/10-implementation-plan.md` | Phased delivery plan                                   |
+| `docs/11-deployment.md`          | Operations and deployment                              |
+| `docs/12-operations.md`          | Monitoring, backup, security, rollback, disaster recovery |
 
-The OpenAPI contract in `docs/api-specs/`, the schema in `docs/database/mri-lab.dbml`, and the diagrams in `docs/diagrams/` are also normative.
+The OpenAPI contract in `docs/06-api-specification/`, the schema in `docs/05-data-model/mri-lab.dbml`, and the diagrams in `docs/04-architecture/` are also normative.
 
 When an implementation and a document disagree, stop and resolve the disagreement explicitly rather than silently choosing one.
 
@@ -85,7 +86,7 @@ Never import route handlers into business logic. Never expose database rows dire
 ### API rules
 
 1. Base path is `/api/v1`.
-2. Responses use the error envelope from `docs/07-api-spec.md`.
+2. Responses use the error envelope from `docs/06-api-specification.md`.
 3. UUIDs identify resources; timestamps are ISO 8601 UTC (`...Z`).
 4. Unknown request fields are rejected on writes (`extra="forbid"`).
 5. List endpoints use cursor pagination, deterministic ordering, and `DEFAULT_PAGE_SIZE`/`MAX_PAGE_SIZE`.
@@ -102,7 +103,7 @@ Never import route handlers into business logic. Never expose database rows dire
 
 ## 5. Scientific conventions
 
-1. Volumetric arrays carry an explicit affine / spatial header (`docs/09-design.md`, viewer slice constraints).
+1. Volumetric arrays carry an explicit affine / spatial header (`docs/07-ui-ux-design.md`, viewer slice constraints).
 2. Validation and statistics are deterministic: fixed seeds, no ambient randomness in `app/scientific/`.
 3. Every persisted result records dataset version, pipeline version, image digest, parameters, and schema version.
 4. MRI processing must not run inside ordinary web request handlers.
@@ -121,7 +122,7 @@ Never import route handlers into business logic. Never expose database rows dire
 ## 7. Frontend conventions
 
 1. Strict TypeScript, no `any`.
-2. Design tokens from `docs/09-design.md`; avoid scattered arbitrary values.
+2. Design tokens from `docs/07-ui-ux-design.md`; avoid scattered arbitrary values.
 3. Every data screen implements loading, empty, no-results, validation-error, permission-error, network-error, and unexpected-error states.
 4. Never show success before the server confirms it.
 5. Access the API through the BFF proxy (`/api/proxy/**`, `src/lib/api/`); never call the backend from the browser with raw secrets.

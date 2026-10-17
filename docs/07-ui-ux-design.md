@@ -8,12 +8,12 @@ The interface should feel like a professional scientific workbench: precise, cal
 
 The design must support the workflows defined in:
 
-- `01-overview.md` — product vision and the primary user workflow.
-- `02-requirements.md` — functional and non-functional requirements (FR-001..FR-022).
+- `00-overview.md` — product vision and the primary user workflow.
+- `01-requirements.md` — functional and non-functional requirements (FR-001..FR-022).
 - `03-user-stories.md` — user goals and acceptance scenarios.
-- `04-features.md` — user-visible behaviour, states, and edge cases.
-- `05-architecture.md` — system boundaries, the viewer data path, and display-versus-analysis rules.
-- `06-data-model.md` — canonical entities.
+- `02-features.md` — user-visible behaviour, states, and edge cases.
+- `04-architecture.md` — system boundaries, the viewer data path, and display-versus-analysis rules.
+- `05-data-model.md` — canonical entities.
 - `08-tech-stack.md` — technology choices.
 
 The canonical stack is Next.js (App Router) + React + TypeScript, with TailwindCSS and the daisyUI component layer, React Query for server state, and vtk.js for the volumetric multiplanar viewer.
@@ -1026,7 +1026,7 @@ Do not sacrifice accessibility to achieve a visually minimal interface.
 
 ## 22. Loading, Empty, and Error States
 
-Every data-driven screen must distinguish the following states. Concrete MRI examples are given in `04-features.md` §17.
+Every data-driven screen must distinguish the following states. Concrete MRI examples are given in `02-features.md` §17.
 
 ### Loading
 
@@ -1272,7 +1272,7 @@ The implementation should include:
 - Accessible forms, controls, and a keyboard-operable viewer.
 - Consistent status indicators.
 - A not-found page and a clear authentication experience.
-- An HTML design prototype under `docs/design/html/` and matching screenshots under `docs/design/images/`, covering the core screens of primary user journeys A and B.
+- An HTML design prototype under `docs/07-ui-ux-design/html/` and matching screenshots under `docs/07-ui-ux-design/images/`, covering the core screens of primary user journeys A and B.
 
 ## 27. Definition of Done
 
@@ -1290,5 +1290,5 @@ The design is considered implemented when:
 10. Colour maps offered by default are colour-blind safe, and `prefers-reduced-motion` is respected.
 11. No control advertises unsupported or deferred functionality (for example Notebooks or a visual drag-and-drop pipeline editor).
 12. The interface does not make unsupported medical, diagnostic, or scientific claims.
-13. The HTML design prototype in `docs/design/html/` and its screenshots in `docs/design/images/` cover the core screens of the primary journeys.
+13. The HTML design prototype in `docs/07-ui-ux-design/html/` and its screenshots in `docs/07-ui-ux-design/images/` cover the core screens of the primary journeys.
 14. Changed frontend source files pass the Husky pre-commit ESLint and Prettier checks; full frontend tests and type checks remain separate gates.

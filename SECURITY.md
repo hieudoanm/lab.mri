@@ -44,7 +44,7 @@ Disclosure is coordinated. Give the project time to release a fix before publici
 - `AUTH_MODE=development` is a local-only convenience (no password). Production must run `AUTH_MODE=oidc`.
 - Browser sessions use an **HttpOnly** session cookie (`mri-lab_session`), forwarded through the Next.js BFF proxy so secrets never reach the frontend bundle.
 - JWT tokens carry issuer and audience claims; production refuses to start with a default or short `AUTH_TOKEN_SECRET` or with an asymmetric algorithm missing `AUTH_PUBLIC_KEY`.
-- **Projects are the tenancy boundary.** Membership is the authorisation source of truth; a client-supplied project identifier is never trusted on its own (see `docs/05-architecture.md`).
+- **Projects are the tenancy boundary.** Membership is the authorisation source of truth; a client-supplied project identifier is never trusted on its own (see `docs/04-architecture.md`).
 - Roles: `owner` (full, manages members), `editor` (may modify resources), `viewer` (read-only).
 - Cross-project access returns `404`, never `403`, to avoid disclosing that a resource exists.
 

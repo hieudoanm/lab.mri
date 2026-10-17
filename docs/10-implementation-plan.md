@@ -50,7 +50,7 @@ This workflow proves that the major components work together before the feature 
 
 ### 2.3 Keep scientific claims modest
 
-The initial application performs descriptive image processing and visualisation. It does not diagnose conditions, interpret clinical outcomes, or claim that its outputs are validated for medical use. Display transformations must be distinguished from analytical computations (`docs/05-architecture.md`, section 10).
+The initial application performs descriptive image processing and visualisation. It does not diagnose conditions, interpret clinical outcomes, or claim that its outputs are validated for medical use. Display transformations must be distinguished from analytical computations (`docs/04-architecture.md`, section 10).
 
 ### 2.4 Protect the development feedback loop
 
@@ -112,7 +112,7 @@ Establish a reproducible development environment and repository structure.
 - [x] Define `docker-compose.yaml` services for PostgreSQL, Redis, and MinIO.
 - [x] Configure GitHub Actions for the initial checks.
 - [x] Add a `.gitignore` covering secrets, local data, build outputs, and generated scientific files.
-- [ ] Write the initial Architecture Decision Records required by section 21 of `docs/05-architecture.md`.
+- [ ] Write the initial Architecture Decision Records required by section 21 of `docs/04-architecture.md`.
 
 ### 4.4 Suggested repository structure
 
@@ -196,7 +196,7 @@ Create the application API and persistent database layer with explicit SQL and v
 - Never hold a transaction open across a long computation or remote object-storage call.
 - Do not share one database connection concurrently across unrelated asynchronous tasks.
 - Keep SQL and persistence logic separated from route handlers.
-- Migrations are forward-only; never edit an applied migration (`docs/06-data-model.md`, section 26).
+- Migrations are forward-only; never edit an applied migration (`docs/05-data-model.md`, section 26).
 
 ### 5.5 Dependencies
 
@@ -310,7 +310,7 @@ Enforce secure project-scoped access before introducing real imaging data workfl
 - `editor` — create and modify datasets, pipelines, runs, and annotations.
 - `viewer` — read-only access to project resources and artifacts.
 
-Project membership is the tenancy boundary. Do not introduce multi-organisation or institutional tenancy for the MVP (`docs/04-features.md`, section 18).
+Project membership is the tenancy boundary. Do not introduce multi-organisation or institutional tenancy for the MVP (`docs/02-features.md`, section 18).
 
 ### 7.5 Dependencies
 
@@ -384,7 +384,7 @@ Use NIfTI (`.nii` and `.nii.gz`). Do not claim support for a format until its pa
 - Never load untrusted data with pickle enabled.
 - A database failure after object upload must not create an indefinitely invisible object.
 
-Validation may run synchronously during finalisation when file limits make it safe; large or expensive validation moves to the worker in Phase 6 (`docs/05-architecture.md`, section 8).
+Validation may run synchronously during finalisation when file limits make it safe; large or expensive validation moves to the worker in Phase 6 (`docs/04-architecture.md`, section 8).
 
 ### 8.6 Dependencies
 
@@ -481,7 +481,7 @@ Implement durable asynchronous image processing with versioned pipelines and rep
 
 ### 10.3 Initial operations
 
-Implement a small set of well-tested operations (`docs/04-features.md`, section 8):
+Implement a small set of well-tested operations (`docs/02-features.md`, section 8):
 
 - Thresholding.
 - Gaussian smoothing with an FWHM in millimetres.
@@ -674,7 +674,7 @@ Make the project easy to evaluate by engineers, recruiters, and research teams.
 ### 13.3 Tasks
 
 - [x] Write a concise project README.
-- [x] Add architecture and data-flow diagrams (`docs/diagrams/`).
+- [x] Add architecture and data-flow diagrams (`docs/04-architecture/`).
 - [x] Add screenshots of key workflows.
 - [x] Add a short demonstration video or GIF (`demo/mri-lab-demo.mp4`).
 - [x] Include synthetic example data with a documented licence.
@@ -900,7 +900,7 @@ A feature is not complete merely because its primary happy path works. Validatio
 
 ## 19. Post-MVP Opportunities
 
-Only consider these after the MVP is stable, and only with a clear user need, documented acceptance criteria, and a test strategy (`docs/04-features.md`, section 18):
+Only consider these after the MVP is stable, and only with a clear user need, documented acceptance criteria, and a test strategy (`docs/02-features.md`, section 18):
 
 - BIDS ingestion and validation as an organisation layer.
 - Additional, well-tested image operations and segmentation methods.

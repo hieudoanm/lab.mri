@@ -4,7 +4,7 @@
 
 This document defines the functional requirements, non-functional requirements, technical constraints, and acceptance criteria for MRI Lab.
 
-All implementation decisions must align with these requirements and the project's `01-overview.md`, `README.md`, and any subsequently written feature, architecture, data-model, and tech-stack documents.
+All implementation decisions must align with these requirements and the project's `00-overview.md`, `README.md`, and any subsequently written feature, architecture, data-model, and tech-stack documents.
 
 Requirements should be implemented incrementally. Do not attempt to implement the entire platform in a single pass. Deliver one complete vertical slice (project creation → dataset upload → validation → viewer → pipeline run → artifact) before expanding scope.
 

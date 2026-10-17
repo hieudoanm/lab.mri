@@ -6,7 +6,7 @@
 # and generates screenshots from all HTML files in the html/ directory.
 #
 # Usage:
-#   ./docs/design/screenshot.sh
+#   ./docs/07-ui-ux-design/screenshot.sh
 
 set -euo pipefail
 

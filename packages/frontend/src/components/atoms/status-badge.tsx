@@ -26,7 +26,7 @@ export interface StatusBadgeProps {
 
 /**
  * A status indicator that pairs colour with a text label and a shape marker so
- * meaning is never conveyed by colour alone (docs/09-design.md §21).
+ * meaning is never conveyed by colour alone (docs/07-ui-ux-design.md §21).
  */
 export const StatusBadge = ({ tone, label, className }: StatusBadgeProps) => {
   return (

@@ -9,10 +9,10 @@ The stack should demonstrate production-oriented full-stack engineering for a co
 The implementation must remain consistent with:
 
 - `README.md` (product specification)
-- `01-overview.md`
-- `docs/design/`
-- `docs/database/`
-- `docs/api-specs/`
+- `00-overview.md`
+- `docs/07-ui-ux-design/`
+- `docs/05-data-model/`
+- `docs/06-api-specification/`
 
 ## 2. Technology Principles
 
@@ -124,7 +124,7 @@ daisyUI supplies accessible, themeable primitives (buttons, inputs, badges, card
 
 Requirements:
 
-- Reuse tokens from `docs/design/`.
+- Reuse tokens from `docs/07-ui-ux-design/`.
 - Map the MRI Lab palette to two daisyUI themes (`lab-light` and `lab-dark`, selectable at runtime with a persisted toggle); do not redefine colours in component code.
 - Prefer reusable components for repeated interface patterns.
 - Prefer daisyUI component classes over bespoke utility stacks for standard controls.

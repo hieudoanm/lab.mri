@@ -47,7 +47,7 @@ This project uses `uv` for Python dependency management.
 Run the bash script which handles setup and screenshot generation:
 
 ```bash
-./docs/design/screenshot.sh
+./docs/07-ui-ux-design/screenshot.sh
 ```
 
 This will:
@@ -61,7 +61,7 @@ This will:
 If you prefer to run the steps manually:
 
 ```bash
-cd docs/design
+cd docs/07-ui-ux-design
 uv sync
 uv run playwright install chromium
 uv run screenshot.py
@@ -86,7 +86,7 @@ The `.venv` directory and `uv.lock` file are created by `uv` and should not be c
 If you prefer to take screenshots manually, open each HTML file in a browser:
 
 ```bash
-open docs/design/html/01-landing.html
+open docs/07-ui-ux-design/html/01-landing.html
 ```
 
 Use the theme switcher in the bottom-right corner to toggle between the light and dark themes.
@@ -99,7 +99,7 @@ The HTML files use:
 - **daisyUI v5** for component styling
 - Two daisyUI themes — `lab-light` (default) and `lab-dark` — declared per page and
   selectable with the built-in switcher (see below)
-- The MRI Lab design tokens from `docs/09-design.md §4`
+- The MRI Lab design tokens from `docs/07-ui-ux-design.md §4`
 
 ### Theme switcher
 
