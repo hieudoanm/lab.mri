@@ -3,7 +3,7 @@ name = "mri-lab-api"
 version = "0.1.0"
 description = "MRI Lab REST API and background image-processing worker"
 readme = "README.md"
-requires-python = "==3.15.0"
+requires-python = "==3.15.1"
 dependencies = [
     "celery[redis]==5.6.3",
     "fastapi==0.156.8",
